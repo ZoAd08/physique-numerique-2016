@@ -1,0 +1,9 @@
+set xlabel 'Nombre de pas'
+set ylabel 'Déplacement moyen'
+set logscale xy
+f(x) = exp(a*log(x))
+set fit errorscaling
+fit f(x) 'output.txt' using 1:2:3 yerr via a
+title_f(a,b) = sprintf('f(x) = %.2fx', a)
+plot "output.txt" using 1:2:3 with yerrorbars title "Marches aléatoire", f(x) t title_f(a,b)
+pause -1 "Hit any key to continue"
