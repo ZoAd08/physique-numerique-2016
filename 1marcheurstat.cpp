@@ -1,3 +1,16 @@
+/*******************************************************************************
+ *  @file    1marcheurstat.cpp
+ *  @author  Benjamin GALLOIS
+ *  @date    18/11/2016
+ *  @version 1.0
+ *  @resume  Permet de tracer la marche aléatoire d'un nombre N de bactérie.
+ 						 Renvoie un fichier texte contenant les positions x et y dans deux
+						 colones, les lignes sont dans l'ordre des particules (x0 particule1
+					  x0 particule2 etc...)
+*******************************************************************************/
+
+
+
 #include <iostream>
 #include <stdlib.h>
 #include <math.h>
@@ -5,9 +18,9 @@
 #include <ctime>
 
 
-/*marche aléatoire 2D précise à 1 degré dans une boîte circulaire*/
 
-double f(int step, float taille, float radius, int marcheur)  //step = nombre de pas de la marche, taille = longueur d'un pas, radius = rayon de la boîte, marcheur = nombre de marcheurs aléatoires
+//step = nombre de pas de la marche, taille = longueur d'un pas, radius = rayon de la boîte, marcheur = nombre de marcheurs aléatoires
+double f(int step, float taille, float radius, int marcheur)
 {
 	double x[step][marcheur], y[step][marcheur], theta;
 	double a[marcheur];
@@ -17,7 +30,7 @@ double f(int step, float taille, float radius, int marcheur)  //step = nombre de
 		{
 			x[0][j]=0;
 			y[0][j]=0;
-			theta = (3.14*(rand() % 359))/180;
+			theta = (M_PI*(rand() % 359))/180;
 			x[i][j]=x[i-1][j]+taille*cos(theta);
 			y[i][j]=y[i-1][j]+taille*sin(theta);
 
