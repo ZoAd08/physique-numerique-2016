@@ -62,7 +62,7 @@ double moyenne(double vector[], double dimension)
 	while(i<dimension)
 	{
 		sum = sum + vector[i];
-		i = i+1;
+		i += 1;
 	}
 	return sum/dimension;
 }
@@ -75,8 +75,8 @@ double err(double vector[], double dimension, double mean)
 	double sum = 0;
 	while(i<dimension)
 	{
-		sum = sum + pow((vector[i]-mean),2);
-		i = i+1;
+		sum += pow((vector[i]-mean),2);
+		i += 1;
 	}
 	return sqrt(sum/dimension);
 }

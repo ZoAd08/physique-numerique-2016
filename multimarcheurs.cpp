@@ -27,7 +27,7 @@
 //step = nombre de pas de la marche, taille = longueur d'un pas, radius = rayon de la boîte
 double f(int step, float taille, float radius)
 {
-	double x[step], y[step],theta;
+	double x[step], y[step],theta,r;
 	x[0]=0;
 	y[0]=0;
 	for (int i=1 ; i<step; ++i)
@@ -42,12 +42,8 @@ double f(int step, float taille, float radius)
 			y[i]=y[i-1];
 		}
 		//printf ( "%.3f \t %.3f \n", x[i],y[i]); //Permet de visualiser la marche aléatoire
-    if(i==step-1)
-    {
-			double r;
-			return r=sqrt(pow(x[i],2)+pow(y[i],2));
-   	}
 	}
+	return r=pow(x[step-1]-x[0],2)+pow(y[step-1]-y[0],2);
 }
 
 
@@ -83,7 +79,6 @@ double err(double vector[], double dimension, double mean)
 int main()
 {
 	srand (time(NULL));
-	freopen( "output.txt", "w", stdout );
 	int it = 10;
 	int b,int_nombre_de_marche;
 	int Nmax = 5000;
@@ -91,7 +86,7 @@ int main()
 
 	nombre_de_marche = 1000;
 	int_nombre_de_marche = nombre_de_marche;
-
+	freopen( "r2vsN.txt", "w", stdout );
 	while(it < Nmax)
 	{
 		double sum[int_nombre_de_marche],error[int_nombre_de_marche];
@@ -112,6 +107,20 @@ int main()
 		else
 		{
 				it += 80;
+		}
+
+		freopen( "r2vsNM.txt", "w", stdout );
+		int nombre_de_simulation = 1000;
+		for(int i = 0 ; i < nombre_de_simulation ; ++i)
+		{
+			double k = 0;
+			double somme = 0;
+			while(k < i)
+			{
+				somme += f(1000,1,10000);
+				k += 1;
+			}
+			printf ("%.4u \t %.3f \n",i + 1,somme/k);
 		}
 
 	}

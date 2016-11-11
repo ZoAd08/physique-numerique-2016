@@ -30,6 +30,6 @@ for i in range(len(data[:,0])):
 
 plt.figure(1)
 for i in range(marcheur):
-	plt.plot(x[-1,i],y[-1,i],'o')
+	plt.plot(x[:,i],y[:,i],'o')
 
 plt.show()
