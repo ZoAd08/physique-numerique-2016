@@ -3,7 +3,7 @@
  *  @author  Benjamin GALLOIS
  *  @date    18/11/2016
  *  @version 1.2
- *  @resume  Permet de tracer la marche aléatoire de N particules en prennant
+ *  @resume  Permet de tracer la marche aleatoire de N particules en prennant
  			 le fichier .txt du fichier 1marcheurstat.cpp
 *******************************************************************************/'''
 
@@ -14,14 +14,14 @@
 import numpy as np
 import matplotlib.pyplot as plt
 
-marcheur = 50
+marcheur = 200
 data = np.loadtxt("marcheur.txt")
 x=np.zeros(((int(len(data[:,0])/marcheur)),marcheur))
 y=np.zeros(((int(len(data[:,0])/marcheur)),marcheur))
 
 
 
-for i in range(len(data[:,0])):
+for i in range(len(data[:,0])+1):
 	for j in range(marcheur):
 		if i < len(data[:,0])/marcheur:
 			x[i,j]=data[marcheur*i+j,0]
@@ -30,6 +30,7 @@ for i in range(len(data[:,0])):
 
 plt.figure(1)
 for i in range(marcheur):
-	plt.plot(x[:,i],y[:,i],'o')
+	plt.plot(x[-1,i],y[-1,i],'bo')
+	plt.plot(x[0,i],y[0,i],'ro')
 
 plt.show()

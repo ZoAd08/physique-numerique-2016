@@ -102,28 +102,29 @@ int main()
 		printf ("%.4u \t %.3f \t %.3f \n",it,r[it],error[it]);
 		if(it<1000)
 		{
-				it += 20;
+				it += 5;
 		}
 		else
 		{
-				it += 80;
+				it += 10;
 		}
-
+	}
 		freopen( "r2vsNM.txt", "w", stdout );
-		int nombre_de_simulation = 1000;
-		for(int i = 0 ; i < nombre_de_simulation ; ++i)
+		int nombre_de_simulation = 10000;
+		for(int i = 1 ; i <= nombre_de_simulation ; i =+ 10)
 		{
 			double k = 0;
 			double somme = 0;
 			while(k < i)
 			{
-				somme += f(1000,1,10000);
+				somme += f(100,1,10000);
 				k += 1;
 			}
-			printf ("%.4u \t %.3f \n",i + 1,somme/k);
+			printf ("%.4u \t %.3f \n",i,somme/k);
 		}
 
-	}
+
+
 
 
 	return 0;
