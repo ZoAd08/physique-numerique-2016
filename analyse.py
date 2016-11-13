@@ -14,7 +14,7 @@
 import numpy as np
 import matplotlib.pyplot as plt
 
-marcheur = 200
+marcheur = 500
 data = np.loadtxt("marcheur.txt")
 x=np.zeros(((int(len(data[:,0])/marcheur)),marcheur))
 y=np.zeros(((int(len(data[:,0])/marcheur)),marcheur))
@@ -30,7 +30,10 @@ for i in range(len(data[:,0])+1):
 
 plt.figure(1)
 for i in range(marcheur):
-	plt.plot(x[-1,i],y[-1,i],'bo')
-	plt.plot(x[0,i],y[0,i],'ro')
+	plt.plot(x[0,i],y[0,i],'bo')
+	plt.plot(x[-1,i],y[-1,i],'ro')
 
+
+plt.plot(0,0,'go')
+plt.legend()
 plt.show()

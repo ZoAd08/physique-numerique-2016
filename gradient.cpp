@@ -15,19 +15,45 @@
 #include <ctime>
 
 
-bool equation_droite(double x1, double y1, double x2, double y2)
+double* gradient(double x , double y)
+{
+	static double array[2];
+	double concentration = exp(-(pow(x,2) + pow(y,2)));
+	array[0] = -(2)*x*exp(-(pow(x,2) + pow(y,2)));
+	array[1] = -(2)*y*exp(-(pow(x,2) + pow(y,2)));
+	return array;
+}
+
+double produit_scalaire(double* vector1 , double* vector2)
+{
+	return vector1[0]*vector2[0] + vector1[1]*vector2[1];
+}
+
+double* vecteur_deplacement(double xa , double ya , double xb , double yb)
+{
+	static double vecteur_r[2];
+	vecteur_r[0]=xb-xa;
+	vecteur_r[1]=yb-ya;
+	return vecteur_r;
+}
+
+double regles_deplacement(double valeur)
+{
+	if(valeur > 0)
 	{
-		double b = 0;
-		b = y1 - ((x1*(y2-y1))/(x2-x1));
-		if(b >= -0.5 && b <= 0.5  && pow(x1,2) > pow(x2,2))
-		{
-			return true;
-		}
-		else
-		{
-			return false;
-		}
+		return 100*valeur + 1;
 	}
+
+	if(valeur < 0)
+	{
+		return 0.5;
+	}
+	else
+	{
+		return 0.5;
+	}
+}
+
 
 
 //step = nombre de pas de la marche, taille = longueur d'un pas, radius = rayon de la boîte, marcheur = nombre de marcheurs aléatoires
@@ -39,26 +65,28 @@ double f(int step, float taille, int radius, int marcheur)
 	{
 		for (int j=0 ; j<marcheur ; ++j)
 		{
-			x[0][j]=(rand() % radius/2)+(-1)*(rand() % radius/2);
-			y[0][j]=(rand() % radius/2)+(-1)*(rand() % radius/2);
+			x[0][j]=(rand() % 4)+(-1)*(rand() % 4);
+			y[0][j]=(rand() % 4)+(-1)*(rand() % 4);
 			theta = (M_PI*(rand() % 359))/180;
 			x[i][j]=x[i-1][j]+taille*cos(theta);
 			y[i][j]=y[i-1][j]+taille*sin(theta);
-			bool droite;
-			droite = equation_droite(x[i-1][j], y[i-1][j], x[i][j], y[i][j]);
 
-			if(droite == true)
-			{
-				x[i][j]=x[i-1][j]+taille*5*cos(theta);
-				y[i][j]=y[i-1][j]+taille*5*sin(theta);
-			}
+			double *deplacement , *vecteurgrad;
+			double scalaire;
+			deplacement = vecteur_deplacement(x[i-1][j] , y[i-1][j] , x[i][j] , y[i][j]);
+			vecteurgrad = gradient(x[i-1][j] , y[i-1][j]);
+			scalaire = produit_scalaire(deplacement , vecteurgrad);
+			double rule = regles_deplacement(scalaire);
+
+			x[i][j]=x[i-1][j]+taille*rule*cos(theta);
+			y[i][j]=y[i-1][j]+taille*rule*sin(theta);
 
 			if((pow(x[i][j],2)+pow(y[i][j],2)>pow(radius,2)))
 			{
 				x[i][j]=x[i-1][j];
 				y[i][j]=y[i-1][j];
 			}
-			printf ( "%.3f \t %.3f \n", x[i][j],y[i][j]);
+			printf ( "%.3f \t %.3f \t %.20f \n", x[i][j],y[i][j],scalaire);
 			if (i==step-1)
 			{
 				a[j]=sqrt(pow(x[i][j],2)+pow(y[i][j],2));
@@ -67,7 +95,7 @@ double f(int step, float taille, int radius, int marcheur)
 	}
 	for(int i=0;i<marcheur;++i)
 	{
-	//printf ( "%.3u \t %.3f \n", i,a[i]);
+
 	}
 }
 
@@ -98,7 +126,7 @@ int main()
 	srand (time(NULL));
 	freopen( "marcheur.txt", "w", stdout );
 	double r;
-	r=f(2000,2,20,200);
+	r=f(1000,0.5,10,500);
 
 	return 0;
 }
