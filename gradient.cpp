@@ -41,7 +41,7 @@ double regles_deplacement(double valeur)
 {
 	if(valeur > 0)
 	{
-		return 100*valeur + 1;
+		return 50*valeur + 1;
 	}
 
 	if(valeur < 0)
@@ -65,8 +65,8 @@ double f(int step, float taille, int radius, int marcheur)
 	{
 		for (int j=0 ; j<marcheur ; ++j)
 		{
-			x[0][j]=(rand() % 4)+(-1)*(rand() % 4);
-			y[0][j]=(rand() % 4)+(-1)*(rand() % 4);
+			x[0][j]=((double)rand()/(double)RAND_MAX)*4. - ((double)rand()/(double)RAND_MAX)*4.;
+			y[0][j]=((double)rand()/(double)RAND_MAX)*4. - ((double)rand()/(double)RAND_MAX)*4.;
 			theta = (M_PI*(rand() % 359))/180;
 			x[i][j]=x[i-1][j]+taille*cos(theta);
 			y[i][j]=y[i-1][j]+taille*sin(theta);
@@ -126,7 +126,7 @@ int main()
 	srand (time(NULL));
 	freopen( "marcheur.txt", "w", stdout );
 	double r;
-	r=f(1000,0.5,10,500);
+	r=f(1000,0.2,4,500);
 
 	return 0;
 }

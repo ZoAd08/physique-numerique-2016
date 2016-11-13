@@ -30,8 +30,8 @@ for i in range(len(data[:,0])+1):
 
 plt.figure(1)
 for i in range(marcheur):
-	plt.plot(x[0,i],y[0,i],'bo')
-	plt.plot(x[-1,i],y[-1,i],'ro')
+	plt.plot(x[0,i],y[0,i],'b.')
+	plt.plot(x[-1,i],y[-1,i],'r.')
 
 
 plt.plot(0,0,'go')
