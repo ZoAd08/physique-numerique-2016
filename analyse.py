@@ -15,7 +15,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 import matplotlib.lines as mlines
 
-marcheur = 1000
+marcheur = 10
 radius = 4.
 data = np.loadtxt("marcheur.txt")
 x=np.zeros(((int(len(data[:,0])/marcheur)),marcheur))
@@ -29,7 +29,8 @@ for i in range(len(data[:,0])+1):
 			x[i,j]=data[marcheur*i+j,0]
 			y[i,j]=data[marcheur*i+j,1]
 
-
+legend_nbmarcheurs = "Nombre de bacteries : " + str(marcheur) + "\n"
+legend_nbpas = "Nombre de pas : " + str(len(x[:,0])+1)
 plt.figure(1)
 for i in range(marcheur):
 	plt.plot(x[0,i],y[0,i],'b.')
@@ -44,4 +45,5 @@ plt.axis('equal')
 Init = mlines.Line2D([], [], color='blue', marker=".",markersize=15, label='Position initiale')
 Fin = mlines.Line2D([], [], color='red', marker=".",markersize=15, label='Position finale')
 plt.legend(handles=[Init,Fin])
+plt.title(legend_nbmarcheurs + legend_nbpas)
 plt.show()

@@ -135,7 +135,7 @@ int main()
 	srand (time(NULL));
 	freopen( "marcheur.txt", "w", stdout );
 	double r;
-	r=f(200,0.2,4,1000);
+	r=f(200,0.2,4,10);
 
 	return 0;
 }
