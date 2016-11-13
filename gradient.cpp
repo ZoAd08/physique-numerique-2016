@@ -3,7 +3,11 @@
  *  @author  Benjamin GALLOIS
  *  @date    18/11/2016
  *  @version 1.0
- *  @resume
+ *  @resume  Le fichier gradient.cpp permet de simuler la nage de N bactéries dans un gradient
+ 						 d'attractant, le pas augmente proportionnellement avec la produit scalaire entrecoup
+ 						 le vecteur déplacement de la bactérie et le gradient du champ de concentration.
+ 						 Cela permet de mettre en évidence "l'effet volcan". On trace les marches aléatoires
+ 					 	 à l'aide du fichier analyse.py.
 *******************************************************************************/
 
 
@@ -31,7 +35,7 @@ double produit_scalaire(double* vector1 , double* vector2)
 	return vector1[0]*vector2[0] + vector1[1]*vector2[1];
 }
 
-/calcule le vecteur déplacement à partir des coordonnées de deux points
+//calcule le vecteur déplacement à partir des coordonnées de deux points
 double* vecteur_deplacement(double xa , double ya , double xb , double yb)
 {
 	static double vecteur_r[2];
@@ -61,7 +65,7 @@ double regles_deplacement(double valeur)
 
 
 //step = nombre de pas de la marche, taille = longueur d'un pas, radius = rayon de la boîte, marcheur = nombre de marcheurs aléatoires
-double f(int step, float taille, int radius, int marcheur)
+double f(int step, float taille, double radius, int marcheur)
 {
 	double x[step][marcheur], y[step][marcheur], theta;
 	double a[marcheur];
@@ -69,8 +73,13 @@ double f(int step, float taille, int radius, int marcheur)
 	{
 		for (int j=0 ; j<marcheur ; ++j)
 		{
-			x[0][j]=((double)rand()/(double)RAND_MAX)*4. - ((double)rand()/(double)RAND_MAX)*4.;
-			y[0][j]=((double)rand()/(double)RAND_MAX)*4. - ((double)rand()/(double)RAND_MAX)*4.;
+			if(i ==1)
+			{
+				double r_init = ((double)rand()/(double)RAND_MAX)*radius;
+				double theta_init = (M_PI*(rand() % 359))/180;
+				x[0][j]=r_init*cos(theta_init);
+				y[0][j]=r_init*sin(theta_init);
+			}
 			theta = (M_PI*(rand() % 359))/180;
 			x[i][j]=x[i-1][j]+taille*cos(theta);
 			y[i][j]=y[i-1][j]+taille*sin(theta);
@@ -96,10 +105,6 @@ double f(int step, float taille, int radius, int marcheur)
 				a[j]=sqrt(pow(x[i][j],2)+pow(y[i][j],2));
 	   		 }
 		}
-	}
-	for(int i=0;i<marcheur;++i)
-	{
-
 	}
 }
 
@@ -130,7 +135,7 @@ int main()
 	srand (time(NULL));
 	freopen( "marcheur.txt", "w", stdout );
 	double r;
-	r=f(200,0.2,4,2000);
+	r=f(200,0.2,4,1000);
 
 	return 0;
 }

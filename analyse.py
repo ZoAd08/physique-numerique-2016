@@ -13,8 +13,10 @@
 
 import numpy as np
 import matplotlib.pyplot as plt
+import matplotlib.lines as mlines
 
-marcheur = 2000
+marcheur = 1000
+radius = 4.
 data = np.loadtxt("marcheur.txt")
 x=np.zeros(((int(len(data[:,0])/marcheur)),marcheur))
 y=np.zeros(((int(len(data[:,0])/marcheur)),marcheur))
@@ -33,7 +35,13 @@ for i in range(marcheur):
 	plt.plot(x[0,i],y[0,i],'b.')
 	plt.plot(x[-1,i],y[-1,i],'r.')
 
-
-plt.plot(0,0,'go')
-plt.legend()
+circle1 = plt.Circle((0, 0), radius, color='b',fill=False)
+ax = plt.gca()
+ax.add_artist(circle1)
+plt.ylim((-radius,radius))
+plt.xlim((-radius,radius))
+plt.axis('equal')
+Init = mlines.Line2D([], [], color='blue', marker=".",markersize=15, label='Position initiale')
+Fin = mlines.Line2D([], [], color='red', marker=".",markersize=15, label='Position finale')
+plt.legend(handles=[Init,Fin])
 plt.show()
