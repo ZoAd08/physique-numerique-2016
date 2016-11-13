@@ -15,6 +15,7 @@
 #include <ctime>
 
 
+//gradient de concentration, renvoie un vecteur à deux composantes
 double* gradient(double x , double y)
 {
 	static double array[2];
@@ -24,11 +25,13 @@ double* gradient(double x , double y)
 	return array;
 }
 
+//calcule le produit scalaire entre deux vecteurs
 double produit_scalaire(double* vector1 , double* vector2)
 {
 	return vector1[0]*vector2[0] + vector1[1]*vector2[1];
 }
 
+/calcule le vecteur déplacement à partir des coordonnées de deux points
 double* vecteur_deplacement(double xa , double ya , double xb , double yb)
 {
 	static double vecteur_r[2];
@@ -37,6 +40,7 @@ double* vecteur_deplacement(double xa , double ya , double xb , double yb)
 	return vecteur_r;
 }
 
+//régles qui régissent le déplacement d'une bactérie suivant l'orientation de son vecteur déplacement et du gradient
 double regles_deplacement(double valeur)
 {
 	if(valeur > 0)
@@ -126,7 +130,7 @@ int main()
 	srand (time(NULL));
 	freopen( "marcheur.txt", "w", stdout );
 	double r;
-	r=f(1000,0.2,4,500);
+	r=f(200,0.2,4,2000);
 
 	return 0;
 }

@@ -14,7 +14,7 @@
 import numpy as np
 import matplotlib.pyplot as plt
 
-marcheur = 500
+marcheur = 2000
 data = np.loadtxt("marcheur.txt")
 x=np.zeros(((int(len(data[:,0])/marcheur)),marcheur))
 y=np.zeros(((int(len(data[:,0])/marcheur)),marcheur))
