@@ -3,7 +3,7 @@
  *  @author  Benjamin GALLOIS
  *  @date    18/11/2016
  *  @version 1.5
- *  @resume  Permet de tracer le déplacement moyen "r" à
+ *  @resume  Permet de tracer le déplacement moyen carré "r" à
  						 partir d'un nombre "nombre_de_marche" de marches
 					 	 aléatoires en fonction du nombre de pas "0<It<Nmax", et
 					 	 de le comparer à la racine carrée du nombre de pas.
