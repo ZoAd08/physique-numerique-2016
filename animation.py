@@ -14,10 +14,10 @@ import time
 import numpy as np
 
 
-#extraction des données
+#extraction des donnees
 
 marcheur = 500
-radius = 10.
+radius = 4.
 data = np.loadtxt("marcheur.txt")
 x=np.zeros(((int(len(data[:,0])/marcheur)),marcheur))
 y=np.zeros(((int(len(data[:,0])/marcheur)),marcheur))
@@ -57,7 +57,7 @@ def animate(i):
 
 
 
-#tracé de l'animation
+#trace de l'animation
 
 ani = animation.FuncAnimation(fig, animate, frames=len(x[:,0]), interval=10, blit=True, repeat=True)
 legend_nbmarcheurs = "Nombre de bacteries : " + str(marcheur) + "\n"

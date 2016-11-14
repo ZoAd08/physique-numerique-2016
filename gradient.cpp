@@ -49,16 +49,16 @@ double regles_deplacement(double valeur)
 {
 	if(valeur > 0)
 	{
-		return 200*valeur + 1;
+		return 20*valeur + 1;
 	}
 
 	if(valeur < 0)
 	{
-		return 0.5;
+		return 10*valeur+1;
 	}
 	else
 	{
-		return 0.5;
+		return 1;
 	}
 }
 
@@ -136,7 +136,7 @@ int main()
 	srand (time(NULL));
 	freopen( "marcheur.txt", "w", stdout );
 	double r;
-	r=f(1000,0.2,10,500);
+	r=f(1000,0.2,4,500);
 
 	return 0;
 }
