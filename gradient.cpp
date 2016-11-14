@@ -49,7 +49,7 @@ double regles_deplacement(double valeur)
 {
 	if(valeur > 0)
 	{
-		return 50*valeur + 1;
+		return 200*valeur + 1;
 	}
 
 	if(valeur < 0)
@@ -75,7 +75,7 @@ double f(int step, float taille, double radius, int marcheur)
 		{
 			if(i ==1)
 			{
-				double r_init = ((double)rand()/(double)RAND_MAX)*radius;
+				double r_init = ((double)rand()/(double)RAND_MAX)*(radius);
 				double theta_init = (M_PI*(rand() % 359))/180;
 				x[0][j]=r_init*cos(theta_init);
 				y[0][j]=r_init*sin(theta_init);
@@ -86,7 +86,8 @@ double f(int step, float taille, double radius, int marcheur)
 
 			double *deplacement , *vecteurgrad;
 			double scalaire;
-			deplacement = vecteur_deplacement(x[i-1][j] , y[i-1][j] , x[i][j] , y[i][j]);
+			int retard = 2;
+			deplacement = vecteur_deplacement(x[i-1-retard][j] , y[i-1-retard][j] , x[i-retard][j] , y[i-retard][j]);
 			vecteurgrad = gradient(x[i-1][j] , y[i-1][j]);
 			scalaire = produit_scalaire(deplacement , vecteurgrad);
 			double rule = regles_deplacement(scalaire);
@@ -135,7 +136,7 @@ int main()
 	srand (time(NULL));
 	freopen( "marcheur.txt", "w", stdout );
 	double r;
-	r=f(200,0.2,4,10);
+	r=f(1000,0.2,10,500);
 
 	return 0;
 }

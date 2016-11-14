@@ -3,8 +3,7 @@
  *  @author  Benjamin GALLOIS
  *  @date    18/11/2016
  *  @version 1.2
- *  @resume  Permet de tracer la marche aleatoire de N particules en prennant
- 			 le fichier .txt du fichier 1marcheurstat.cpp
+ *  @resume  Permet de tracer la marche aleatoire animé de N particules.
 *******************************************************************************/'''
 
 
@@ -15,7 +14,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 import matplotlib.lines as mlines
 
-marcheur = 10
+marcheur = 500
 radius = 4.
 data = np.loadtxt("marcheur.txt")
 x=np.zeros(((int(len(data[:,0])/marcheur)),marcheur))
