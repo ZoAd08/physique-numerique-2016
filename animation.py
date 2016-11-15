@@ -41,15 +41,15 @@ time_text = ax.text(0.02, 0.95, '', transform=ax.transAxes)
 circle1 = plt.Circle((0, 0), radius, color='b',fill=False)
 ax = plt.gca()
 ax.add_artist(circle1)
-line, = ax.plot([], [], '.', ms=5)
+line, = ax.plot([], [], 'r.', ms=5)
 
 
 
 #animation du graphique
 
 def animate(i):
-    pas = str(i-1)
-    line.set_data(x[i-1,:], y[i-1,:])
+    pas = str(i)
+    line.set_data(x[i,:], y[i,:])
     time_text.set_text('Pas : ' + pas)
     return line, time_text,
 
@@ -59,12 +59,10 @@ def animate(i):
 
 #trace de l'animation
 
-<<<<<<< HEAD
+
 ani = animation.FuncAnimation(fig, animate, frames=len(x[:,0]), interval=400, blit=False , repeat=True)
-=======
-ani = animation.FuncAnimation(fig, animate, frames=len(x[:,0]), interval=200, blit=True, repeat=True)
->>>>>>> e857a65d290e549a11474e3d4a6a2ccaaec91bcc
+
 legend_nbmarcheurs = "Nombre de bacteries : " + str(marcheur) + "\n"
-legend_nbpas = "Nombre de pas : " + str(len(x[:,0])+1)
+legend_nbpas = "Nombre de pas : " + str(len(x[:,0])-1)
 plt.title(legend_nbmarcheurs + legend_nbpas)
 plt.show()

@@ -4,7 +4,7 @@
  *  @author  Benjamin GALLOIS & Djinthana Dufour
  *  @date    15/11/2016
  *  @version 1.0
- *  @resume  Permet de tracer la position initiale et finale de la marche aléatoire N particules.
+ *  @resume  Permet de tracer la position initiale et finale de la marche alï¿½atoire N particules.
 *********************************************************************************************/'''
 
 
@@ -14,7 +14,7 @@
 import numpy as np
 import matplotlib.pyplot as plt
 import matplotlib.lines as mlines
-from numpy import transpose 
+from numpy import transpose
 import time
 start_time = time.time()
 
@@ -31,7 +31,7 @@ y[1,:]=data[len(data[:,0])-marcheur:len(data[:,0]),1].transpose()
 
 
 legend_nbmarcheurs = "Nombre de bacteries : " + str(marcheur) + "\n"
-legend_nbpas = "Nombre de pas : " + str(len(x[:,0])+1)
+legend_nbpas = "Nombre de pas : " + str((len(data[:,0])/marcheur)-1)
 plt.figure(3)
 for i in range(marcheur):
 	plt.plot(x[0,i],y[0,i],'b.')

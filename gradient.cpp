@@ -78,11 +78,23 @@ double f(int step, float taille, double radius, int marcheur)
 		{
 			if(i ==1)
 			{
-				double r_init = ((double)rand()/(double)RAND_MAX)*(radius);
-				double theta_init = (M_PI*(rand() % 359))/180;
-				x[0][j]=r_init*cos(theta_init);
-				y[0][j]=r_init*sin(theta_init);
-				printf ( "%.3f %.20f \n ", x[0][j],y[0][j]);
+				int compteur = 0;
+				while(compteur <= 1 )
+				{
+					double l = ((double)rand()/(double)RAND_MAX)*(2*radius)-radius;
+					double m = ((double)rand()/(double)RAND_MAX)*(2*radius)-radius;
+					if((pow(l,2)+pow(m,2) < pow(radius,2)))
+					{
+						x[0][j] = l;
+						y[0][j] = m;
+						printf ( "%.3f %.20f \n ", x[0][j],y[0][j]);
+						compteur += 1;
+					}
+					else
+					{
+							compteur = 0;
+					}
+				}
 			}
 			theta = (M_PI*(rand() % 359))/180;
 			x[i][j]=x[i-1][j]+taille*cos(theta);
@@ -90,7 +102,7 @@ double f(int step, float taille, double radius, int marcheur)
 
 			double *deplacement , *vecteurgrad;
 			double scalaire;
-			int retard = 1;
+			int retard = 0;
 			deplacement = vecteur_deplacement(x[i-1-retard][j] , y[i-1-retard][j] , x[i-retard][j] , y[i-retard][j]);
 			vecteurgrad = gradient(x[i-1][j] , y[i-1][j]);
 			scalaire = produit_scalaire(deplacement , vecteurgrad);
@@ -112,26 +124,6 @@ double f(int step, float taille, double radius, int marcheur)
 		}
 	}
 }
-
-
-
-double moyenne(double vector[], double dimension)
-{
-	int i = 0;
-	double sum = 0;
-
-	while(i<dimension)
-	{
-		sum = sum + vector[i];
-		i += 1;
-	}
-	return sum/dimension;
-}
-
-
-
-
-
 
 
 
