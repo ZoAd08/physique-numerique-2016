@@ -15,8 +15,11 @@
 #include <iostream>
 #include <stdlib.h>
 #include <math.h>
+#include <cmath>
 #include <fstream>
 #include <ctime>
+
+
 
 
 //gradient de concentration, renvoie un vecteur à deux composantes
@@ -49,7 +52,7 @@ double regles_deplacement(double valeur)
 {
 	if(valeur > 0)
 	{
-		return 50*valeur+1;
+		return 100*valeur+1;
 	}
 
 	if(valeur < 0)
@@ -69,6 +72,7 @@ double f(int step, float taille, double radius, int marcheur)
 {
 	double x[step][marcheur], y[step][marcheur], theta;
 	double a[marcheur];
+	double M_PI = 3.14;
 	for (int i=1 ; i<step; ++i)
 	{
 		for (int j=0 ; j<marcheur ; ++j)
@@ -86,7 +90,7 @@ double f(int step, float taille, double radius, int marcheur)
 
 			double *deplacement , *vecteurgrad;
 			double scalaire;
-			int retard = 0;
+			int retard = 1;
 			deplacement = vecteur_deplacement(x[i-1-retard][j] , y[i-1-retard][j] , x[i-retard][j] , y[i-retard][j]);
 			vecteurgrad = gradient(x[i-1][j] , y[i-1][j]);
 			scalaire = produit_scalaire(deplacement , vecteurgrad);
@@ -136,7 +140,8 @@ int main()
 	srand (time(NULL));
 	freopen( "marcheur.txt", "w", stdout );
 	double r;
-	r=f(200,0.1,1,500);
+	r=f(100,0.1,2,500);
+
 
 	return 0;
 }

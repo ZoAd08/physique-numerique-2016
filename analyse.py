@@ -1,3 +1,4 @@
+# -*- coding: cp1252 -*-
 '''/*******************************************************************************
  *  @file    analyse.cpp
  *  @author  Benjamin GALLOIS
@@ -15,7 +16,7 @@ import matplotlib.pyplot as plt
 import matplotlib.lines as mlines
 
 marcheur = 500
-radius = 4.
+radius = 2.
 data = np.loadtxt("marcheur.txt")
 x=np.zeros(((int(len(data[:,0])/marcheur)),marcheur))
 y=np.zeros(((int(len(data[:,0])/marcheur)),marcheur))
