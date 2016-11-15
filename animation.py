@@ -35,7 +35,7 @@ for i in range(len(data[:,0])+1):
 
 #initialisation de la figure
 
-fig = plt.figure()
+fig = plt.figure(2)
 ax = plt.axes(xlim=(-radius, radius), ylim=(-radius, radius),aspect='equal')
 time_text = ax.text(0.02, 0.95, '', transform=ax.transAxes)
 circle1 = plt.Circle((0, 0), radius, color='b',fill=False)
@@ -59,7 +59,11 @@ def animate(i):
 
 #trace de l'animation
 
+<<<<<<< HEAD
 ani = animation.FuncAnimation(fig, animate, frames=len(x[:,0]), interval=400, blit=False , repeat=True)
+=======
+ani = animation.FuncAnimation(fig, animate, frames=len(x[:,0]), interval=200, blit=True, repeat=True)
+>>>>>>> e857a65d290e549a11474e3d4a6a2ccaaec91bcc
 legend_nbmarcheurs = "Nombre de bacteries : " + str(marcheur) + "\n"
 legend_nbpas = "Nombre de pas : " + str(len(x[:,0])+1)
 plt.title(legend_nbmarcheurs + legend_nbpas)

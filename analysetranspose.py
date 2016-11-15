@@ -1,11 +1,11 @@
 # -*- coding: cp1252 -*-
-'''/*******************************************************************************
- *  @file    analyse.cpp
- *  @author  Benjamin GALLOIS
- *  @date    18/11/2016
- *  @version 1.2
- *  @resume  Permet de tracer la marche aleatoire anime de N particules.
-*******************************************************************************/'''
+'''/*********************************************************************************************
+ *  @file    analysetranspose.py
+ *  @author  Benjamin GALLOIS & Djinthana Dufour
+ *  @date    15/11/2016
+ *  @version 1.0
+ *  @resume  Permet de tracer la position initiale et finale de la marche aléatoire N particules.
+*********************************************************************************************/'''
 
 
 
@@ -14,24 +14,25 @@
 import numpy as np
 import matplotlib.pyplot as plt
 import matplotlib.lines as mlines
+from numpy import transpose 
+import time
+start_time = time.time()
 
 marcheur = 500
 radius = 2.
 data = np.loadtxt("marcheur.txt")
-x=np.zeros(((int(len(data[:,0])/marcheur)),marcheur))
-y=np.zeros(((int(len(data[:,0])/marcheur)),marcheur))
+x=np.zeros((2,marcheur))
+y=np.zeros((2,marcheur))
 
+x[0,:]=data[0:marcheur,0].transpose()
+y[0,:]=data[0:marcheur,1].transpose()
+x[1,:]=data[len(data[:,0])-marcheur:len(data[:,0]),0].transpose()
+y[1,:]=data[len(data[:,0])-marcheur:len(data[:,0]),1].transpose()
 
-
-for i in range(len(data[:,0])+1):
-	for j in range(marcheur):
-		if i < len(data[:,0])/marcheur:
-			x[i,j]=data[marcheur*i+j,0]
-			y[i,j]=data[marcheur*i+j,1]
 
 legend_nbmarcheurs = "Nombre de bacteries : " + str(marcheur) + "\n"
 legend_nbpas = "Nombre de pas : " + str(len(x[:,0])+1)
-plt.figure(1)
+plt.figure(3)
 for i in range(marcheur):
 	plt.plot(x[0,i],y[0,i],'b.')
 	plt.plot(x[-1,i],y[-1,i],'r.')
@@ -47,3 +48,4 @@ Fin = mlines.Line2D([], [], color='red', marker=".",markersize=15, label='Positi
 plt.legend(handles=[Init,Fin])
 plt.title(legend_nbmarcheurs + legend_nbpas)
 plt.show()
+print "--- %s seconds ---" % (time.time() - start_time)

@@ -15,8 +15,11 @@
 #include <iostream>
 #include <stdlib.h>
 #include <math.h>
+#include <cmath>
 #include <fstream>
 #include <ctime>
+
+
 
 
 //gradient de concentration, renvoie un vecteur à deux composantes
@@ -87,7 +90,7 @@ double f(int step, float taille, double radius, int marcheur)
 
 			double *deplacement , *vecteurgrad;
 			double scalaire;
-			int retard = 0;
+			int retard = 1;
 			deplacement = vecteur_deplacement(x[i-1-retard][j] , y[i-1-retard][j] , x[i-retard][j] , y[i-retard][j]);
 			vecteurgrad = gradient(x[i-1][j] , y[i-1][j]);
 			scalaire = produit_scalaire(deplacement , vecteurgrad);
@@ -138,6 +141,5 @@ int main()
 	freopen( "marcheur.txt", "w", stdout );
 	double r;
 	r=f(100,0.1,2,500);
-
 	return 0;
 }
