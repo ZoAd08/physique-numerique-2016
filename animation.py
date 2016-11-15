@@ -17,7 +17,7 @@ import numpy as np
 #extraction des donnees
 
 marcheur = 500
-radius = 4.
+radius = 1.
 data = np.loadtxt("marcheur.txt")
 x=np.zeros(((int(len(data[:,0])/marcheur)),marcheur))
 y=np.zeros(((int(len(data[:,0])/marcheur)),marcheur))
@@ -59,7 +59,7 @@ def animate(i):
 
 #trace de l'animation
 
-ani = animation.FuncAnimation(fig, animate, frames=len(x[:,0]), interval=10, blit=True, repeat=True)
+ani = animation.FuncAnimation(fig, animate, frames=len(x[:,0]), interval=50, blit=True, repeat=True)
 legend_nbmarcheurs = "Nombre de bacteries : " + str(marcheur) + "\n"
 legend_nbpas = "Nombre de pas : " + str(len(x[:,0])+1)
 plt.title(legend_nbmarcheurs + legend_nbpas)

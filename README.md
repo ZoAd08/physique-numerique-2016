@@ -12,7 +12,7 @@ homogène et dans un gradient de nutriments pour mettre en évidence "l'effet vo
 
 ***************************************************************************************************
 On modélise ici la nage des bactéries par une marche aléatoire à deux dimensions.
-Le bactérie effectue une succession d'avancées rectilignes de longueur "a"
+La bactérie effectue une succession d'avancées rectilignes de longueur "a"
  appellées "run", entrecoupé de changement de direction aléatoire. la bactérie
  est capable de sentir son environnement et de se déplacer dans un gradient
  en allongeant la longueur "a" de son run.

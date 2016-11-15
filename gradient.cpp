@@ -49,12 +49,12 @@ double regles_deplacement(double valeur)
 {
 	if(valeur > 0)
 	{
-		return 20*valeur + 1;
+		return 50*valeur+1;
 	}
 
 	if(valeur < 0)
 	{
-		return 10*valeur+1;
+		return 1;
 	}
 	else
 	{
@@ -86,7 +86,7 @@ double f(int step, float taille, double radius, int marcheur)
 
 			double *deplacement , *vecteurgrad;
 			double scalaire;
-			int retard = 2;
+			int retard = 0;
 			deplacement = vecteur_deplacement(x[i-1-retard][j] , y[i-1-retard][j] , x[i-retard][j] , y[i-retard][j]);
 			vecteurgrad = gradient(x[i-1][j] , y[i-1][j]);
 			scalaire = produit_scalaire(deplacement , vecteurgrad);
@@ -136,7 +136,7 @@ int main()
 	srand (time(NULL));
 	freopen( "marcheur.txt", "w", stdout );
 	double r;
-	r=f(1000,0.2,4,500);
+	r=f(200,0.1,1,500);
 
 	return 0;
 }
