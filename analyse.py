@@ -3,7 +3,7 @@
  *  @author  Benjamin GALLOIS
  *  @date    18/11/2016
  *  @version 1.2
- *  @resume  Permet de tracer la marche aleatoire animé de N particules.
+ *  @resume  Permet de tracer la marche aleatoire anime de N particules.
 *******************************************************************************/'''
 
 
@@ -15,7 +15,7 @@ import matplotlib.pyplot as plt
 import matplotlib.lines as mlines
 
 marcheur = 500
-radius = 4.
+radius = 2.
 data = np.loadtxt("marcheur.txt")
 x=np.zeros(((int(len(data[:,0])/marcheur)),marcheur))
 y=np.zeros(((int(len(data[:,0])/marcheur)),marcheur))
