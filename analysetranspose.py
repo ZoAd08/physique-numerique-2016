@@ -4,7 +4,8 @@
  *  @author  Benjamin GALLOIS & Djinthana Dufour
  *  @date    15/11/2016
  *  @version 1.0
- *  @resume  Permet de tracer la position initiale et finale de la marche al�atoire N particules.
+ *  @resume  Permet de tracer la position initiale et finale de la marche aléatoire N particules.
+             
 *********************************************************************************************/'''
 
 
