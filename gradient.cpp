@@ -4,7 +4,7 @@
  *  @date    18/11/2016
  *  @version 1.0
  *  @resume  Le fichier gradient.cpp permet de simuler la nage de N bactéries dans un gradient
- 						 d'attractant, le pas augmente proportionnellement avec la produit scalaire entrecoup
+ 						 d'attractant, le pas augmente proportionnellement avec la produit scalaire entre
  						 le vecteur déplacement de la bactérie et le gradient du champ de concentration.
  						 Cela permet de mettre en évidence "l'effet volcan". On trace les marches aléatoires
  					 	 à l'aide du fichier analyse.py.
@@ -132,6 +132,6 @@ int main()
 	srand (time(NULL));
 	freopen( "marcheur.txt", "w", stdout );
 	double r;
-	r=f(100,0.1,2,500);
+	r=f(500,0.1,2,1000);
 	return 0;
 }
