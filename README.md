@@ -41,3 +41,7 @@ La bactérie effectue une succession d'avancées rectilignes de longueur "a"
  le vecteur déplacement de la bactérie et le gradient du champ de concentration.
  Cela permet de mettre en évidence "l'effet volcan". On trace les marches aléatoires
  à l'aide du fichier analyse.py.
+
+***************************************************************************************************
+
+Le fichier animation permet de visualiser la nage des bactéries.
