@@ -79,7 +79,7 @@ double f(int step, float taille, double radius, int marcheur)
 			if(i ==1)
 			{
 				int compteur = 0;
-				while(compteur <= 1 )
+				while(compteur < 1 )
 				{
 					double l = ((double)rand()/(double)RAND_MAX)*(2*radius)-radius;
 					double m = ((double)rand()/(double)RAND_MAX)*(2*radius)-radius;
@@ -132,6 +132,6 @@ int main()
 	srand (time(NULL));
 	freopen( "marcheur.txt", "w", stdout );
 	double r;
-	r=f(500,0.1,2,1000);
+	r=f(500,0.1,10,1000);
 	return 0;
 }

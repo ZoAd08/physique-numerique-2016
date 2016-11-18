@@ -15,9 +15,9 @@ import numpy as np
 import matplotlib.pyplot as plt
 import matplotlib.lines as mlines
 
-marcheur = 500
+marcheur = 7
 radius = 2.
-data = np.loadtxt("marcheur.txt")
+data = np.loadtxt("modele2.txt")
 x=np.zeros(((int(len(data[:,0])/marcheur)),marcheur))
 y=np.zeros(((int(len(data[:,0])/marcheur)),marcheur))
 
@@ -33,7 +33,7 @@ legend_nbmarcheurs = "Nombre de bacteries : " + str(marcheur) + "\n"
 legend_nbpas = "Nombre de pas : " + str(len(x[:,0])+1)
 plt.figure(1)
 for i in range(marcheur):
-	plt.plot(x[0,i],y[0,i],'b.')
+	plt.plot(x[:,i],y[:,i])
 	plt.plot(x[-1,i],y[-1,i],'r.')
 
 circle1 = plt.Circle((0, 0), radius, color='b',fill=False)

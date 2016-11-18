@@ -5,7 +5,7 @@
  *  @date    15/11/2016
  *  @version 1.0
  *  @resume  Permet de tracer la position initiale et finale de la marche aléatoire N particules.
-             
+
 *********************************************************************************************/'''
 
 
@@ -20,7 +20,7 @@ import time
 start_time = time.time()
 
 marcheur = 500
-radius = 2.
+radius = 5.
 data = np.loadtxt("marcheur.txt")
 x=np.zeros((2,marcheur))
 y=np.zeros((2,marcheur))
