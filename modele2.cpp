@@ -16,6 +16,8 @@
 #include <cmath>
 #include <fstream>
 #include <ctime>
+#include <random>
+#include <chrono>
 
 
 //détermine l'indice correspondant à la valeur minimale d'un array.
@@ -54,6 +56,7 @@ class bacteria
 	double y_past;
 	double temps_past;
 	double temps;
+	double theta_past;
 
 	public:
 	//constructeur
@@ -61,7 +64,8 @@ class bacteria
 	{
     temps = 0;
 		temps_past = 1;
-		double radius = 5;
+		theta_past = 0;
+		double radius = 10;
 		int compteur = 0;
 		while(compteur < 1 )
 		{
@@ -89,12 +93,14 @@ class bacteria
 		double retard = 1;
 		x_past = x_position;
 		y_past = y_position;
-		double concentration = exp(-0.1*(pow(x_position-(retard/temps_past)*(x_position-x_past),2) + pow(y_position-(retard/temps_past)*(y_position-y_past),2)));
-		double pas = (1/5.0)*concentration;
-		double theta = 2*asin(((double)rand()/(double)RAND_MAX)*(2)-1);
+		double concentration = 10*exp(-1*(pow(0.3*(x_position),2) + pow(0.3*(y_position),2)));
+		double pas = (1/10.)*concentration+0.2;
+		double phi = (M_PI*(rand() % 180-91))/180;
+		double theta = phi + theta_past;
+		theta_past = theta;
 		x_position += pas*cos(theta);
 		y_position += pas*sin(theta);
-		if((pow(x_position,2)+pow(y_position,2) > pow(5.,2)))
+		if((pow(x_position,2)+pow(y_position,2) > pow(10,2)))
 		{
 			x_position -= pas*cos(theta);
 			y_position -= pas*sin(theta);
@@ -116,7 +122,7 @@ int main()
 {
 	srand (time(NULL));
 	freopen( "marcheur.txt", "w", stdout );
-	int nombre_de_bacteries = 500;
+	int nombre_de_bacteries = 5;
   bacteria bac[nombre_de_bacteries];
 	double tps[nombre_de_bacteries];
 
