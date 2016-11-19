@@ -15,9 +15,9 @@ import numpy as np
 import matplotlib.pyplot as plt
 import matplotlib.lines as mlines
 
-marcheur = 7
-radius = 2.
-data = np.loadtxt("modele2.txt")
+marcheur = 100
+radius = 5.
+data = np.loadtxt("marcheur.txt")
 x=np.zeros(((int(len(data[:,0])/marcheur)),marcheur))
 y=np.zeros(((int(len(data[:,0])/marcheur)),marcheur))
 

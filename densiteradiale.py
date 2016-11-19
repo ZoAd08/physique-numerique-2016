@@ -15,7 +15,7 @@ from numpy import transpose
 from scipy.spatial import KDTree
 
 marcheur = 500
-radius = 2.
+radius = 5
 pas=0.05
 
 data = np.loadtxt("marcheur.txt")

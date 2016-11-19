@@ -50,6 +50,9 @@ class bacteria
 	private:
 	double x_position;
 	double y_position;
+	double x_past;
+	double y_past;
+	double temps_past;
 	double temps;
 
 	public:
@@ -57,6 +60,7 @@ class bacteria
 	bacteria()
 	{
     temps = 0;
+		temps_past = 1;
 		double radius = 5;
 		int compteur = 0;
 		while(compteur < 1 )
@@ -67,6 +71,8 @@ class bacteria
 			{
 				x_position = l;
 				y_position = m;
+				x_past = l;
+				y_past = m;
 				compteur += 1;
 			}
 			else
@@ -79,10 +85,12 @@ class bacteria
 	//evolution dans le temps d'une bactérie
 	double evolution()
 	{
-		double vitesse = 0.3;
-		double retard = 0.5;
-		double concentration = exp(-0.5*(pow(x_position,2) + pow(y_position,2)));
-		double pas = concentration ;
+		double vitesse = 1;
+		double retard = 1;
+		x_past = x_position;
+		y_past = y_position;
+		double concentration = exp(-0.1*(pow(x_position-(retard/temps_past)*(x_position-x_past),2) + pow(y_position-(retard/temps_past)*(y_position-y_past),2)));
+		double pas = 1.5*concentration + 0.01 ;
 		double theta = (M_PI*(rand() % 359))/180;
 		x_position += pas*cos(theta);
 		y_position += pas*sin(theta);
@@ -91,7 +99,8 @@ class bacteria
 			x_position -= pas*cos(theta);
 			y_position -= pas*sin(theta);
 		}
-		temps = pas/vitesse + retard;
+		temps = pas/vitesse;
+		temps_past = temps;
 		return temps;
 	}
 
@@ -107,7 +116,7 @@ int main()
 {
 	srand (time(NULL));
 	freopen( "marcheur.txt", "w", stdout );
-	int nombre_de_bacteries = 500;
+	int nombre_de_bacteries = 200;
   bacteria bac[nombre_de_bacteries];
 	double tps[nombre_de_bacteries];
 
