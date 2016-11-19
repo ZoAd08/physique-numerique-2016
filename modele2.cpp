@@ -90,8 +90,8 @@ class bacteria
 		x_past = x_position;
 		y_past = y_position;
 		double concentration = exp(-0.1*(pow(x_position-(retard/temps_past)*(x_position-x_past),2) + pow(y_position-(retard/temps_past)*(y_position-y_past),2)));
-		double pas = 1.5*concentration + 0.01 ;
-		double theta = (M_PI*(rand() % 359))/180;
+		double pas = (1/5.0)*concentration;
+		double theta = 2*asin(((double)rand()/(double)RAND_MAX)*(2)-1);
 		x_position += pas*cos(theta);
 		y_position += pas*sin(theta);
 		if((pow(x_position,2)+pow(y_position,2) > pow(5.,2)))
@@ -116,7 +116,7 @@ int main()
 {
 	srand (time(NULL));
 	freopen( "marcheur.txt", "w", stdout );
-	int nombre_de_bacteries = 200;
+	int nombre_de_bacteries = 500;
   bacteria bac[nombre_de_bacteries];
 	double tps[nombre_de_bacteries];
 
