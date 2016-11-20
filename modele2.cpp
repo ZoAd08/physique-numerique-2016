@@ -93,9 +93,9 @@ class bacteria
 		double retard = 1;
 		x_past = x_position;
 		y_past = y_position;
-		double concentration = 10*exp(-1*(pow(0.3*(x_position),2) + pow(0.3*(y_position),2)));
-		double pas = (1/10.)*concentration+0.2;
-		double phi = (M_PI*(rand() % 180-91))/180;
+		double concentration = 2.0*exp(-1*(pow(0.8*(x_position-retard*(x_position-x_past)),2) + pow(0.8*(y_position-retard*(y_position-y_past)),2)));
+		double pas = concentration+0.2;
+		double phi = 2.0*asin(((double)rand()/(double)RAND_MAX)*(2)-1);
 		double theta = phi + theta_past;
 		theta_past = theta;
 		x_position += pas*cos(theta);
@@ -122,7 +122,7 @@ int main()
 {
 	srand (time(NULL));
 	freopen( "marcheur.txt", "w", stdout );
-	int nombre_de_bacteries = 5;
+	int nombre_de_bacteries = 500;
   bacteria bac[nombre_de_bacteries];
 	double tps[nombre_de_bacteries];
 
@@ -131,7 +131,7 @@ int main()
 		bac[i].enregistrement();
 	}
 	int k = 0;
-	while(k < 10000)
+	while(k < 20000)
 	{
 		int min = minimum(tps , nombre_de_bacteries);
 		double value = tps[min];
