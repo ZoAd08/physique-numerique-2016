@@ -65,7 +65,7 @@ class bacteria
     temps = 0;
 		temps_past = 1;
 		theta_past = 0;
-		double radius = 10;
+		double radius = 5;
 		int compteur = 0;
 		while(compteur < 1 )
 		{
@@ -89,18 +89,30 @@ class bacteria
 	//evolution dans le temps d'une bactérie
 	double evolution()
 	{
-		double vitesse = 1;
+		double vitesse = 0.0024;
 		double retard = 1;
 		x_past = x_position;
 		y_past = y_position;
-		double concentration = 2.0*exp(-1*(pow(0.8*(x_position-retard*(x_position-x_past)),2) + pow(0.8*(y_position-retard*(y_position-y_past)),2)));
-		double pas = concentration+0.2;
+		double concentration = (exp(-0.02*(pow((x_position-(1.0/3.0)*(x_position-x_past)),2) + pow((y_position-(1.0/3.0)*(y_position-y_past)),2)))) - (exp(-0.02*(pow((x_position-(2.0/3.0)*(x_position-x_past)),2) + pow((y_position-(2.0/3.0)*(y_position-y_past)),2))));
+		double pas;
+		if(concentration > 0)
+		{
+			pas = 2.0*0.02;
+		}
+		if(concentration < 0)
+		{
+			pas = 0.5*0.02;
+		}
+		else
+		{
+			pas = 0.02;
+		}
 		double phi = 2.0*asin(((double)rand()/(double)RAND_MAX)*(2)-1);
 		double theta = phi + theta_past;
 		theta_past = theta;
 		x_position += pas*cos(theta);
 		y_position += pas*sin(theta);
-		if((pow(x_position,2)+pow(y_position,2) > pow(10,2)))
+		if((pow(x_position,2)+pow(y_position,2) > pow(5,2)))
 		{
 			x_position -= pas*cos(theta);
 			y_position -= pas*sin(theta);

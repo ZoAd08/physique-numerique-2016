@@ -20,7 +20,7 @@ import time
 start_time = time.time()
 
 marcheur = 500
-radius = 10.
+radius = 5.
 data = np.loadtxt("marcheur.txt")
 x=np.zeros((2,marcheur))
 y=np.zeros((2,marcheur))
