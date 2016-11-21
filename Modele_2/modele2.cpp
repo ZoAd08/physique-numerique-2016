@@ -16,8 +16,7 @@
 #include <cmath>
 #include <fstream>
 #include <ctime>
-#include <random>
-#include <chrono>
+
 
 
 //détermine l'indice correspondant à la valeur minimale d'un array.
@@ -52,19 +51,21 @@ class bacteria
 	private:
 	double x_position;
 	double y_position;
-	double x_past;
-	double y_past;
-	double temps_past;
+	double x_past[10000];
+	double y_past[10000];
+	double temps_past[10000];
 	double temps;
 	double theta_past;
+	int iterateur;
 
 	public:
 	//constructeur
 	bacteria()
 	{
     temps = 0;
-		temps_past = 1;
+		temps_past[0] = 0.;
 		theta_past = 0;
+		iterateur = 1;
 		double radius = 5;
 		int compteur = 0;
 		while(compteur < 1 )
@@ -75,8 +76,8 @@ class bacteria
 			{
 				x_position = l;
 				y_position = m;
-				x_past = l;
-				y_past = m;
+				x_past[0] = l;
+				y_past[0] = m;
 				compteur += 1;
 			}
 			else
@@ -89,23 +90,53 @@ class bacteria
 	//evolution dans le temps d'une bactérie
 	double evolution()
 	{
-		double vitesse = 0.0024;
-		double retard = 1;
-		x_past = x_position;
-		y_past = y_position;
-		double concentration = (exp(-0.02*(pow((x_position-(1.0/3.0)*(x_position-x_past)),2) + pow((y_position-(1.0/3.0)*(y_position-y_past)),2)))) - (exp(-0.02*(pow((x_position-(2.0/3.0)*(x_position-x_past)),2) + pow((y_position-(2.0/3.0)*(y_position-y_past)),2))));
-		double pas;
-		if(concentration > 0)
+		double vitesse = 0.241; //micronse-2/seconde
+		double pas_normal = 0.2025; //microns
+		double sens1 = 3; //secondes
+		double sens2 = 1; //secondes
+		double a = temps_past[iterateur - 1] - sens1;
+		double b = temps_past[iterateur - 1] - sens2;
+		double x1,x2,y1,y2;
+
+		if (iterateur < 10)
 		{
-			pas = 2.0*0.02;
+			x1 = x_position;
+			y1 = y_position;
+			x2 = 0;
+			y2 = 0;
 		}
+
+		if(iterateur >= 10)
+		{
+			for(int i = 0; i < iterateur ; ++i)
+			{
+				if(a < temps_past[i])
+				{
+					x1 = x_past[i]-((temps_past[i]-a)/(vitesse));
+					y1 = y_past[i]-((temps_past[i]-a)/(vitesse));
+				}
+				if(b < temps_past[i])
+				{
+					x2 = x_past[i]-((temps_past[i]-b)/(vitesse));
+					y2 = y_past[i]-((temps_past[i]-b)/(vitesse));
+				}
+			}
+		}
+		double concentration1 = exp(-0.02*(pow(x1,2) + pow(y1,2)));
+		double concentration2 = exp(-0.02*(pow(x2,2) + pow(y2,2)));
+		double concentration = concentration1 - concentration2;
+		double pas = 1;
 		if(concentration < 0)
 		{
-			pas = 0.5*0.02;
+			pas = 0*pas_normal;
 		}
-		else
+		if(concentration > 0)
 		{
-			pas = 0.02;
+			pas = 0.1*pas_normal;
+		}
+		if(concentration == 0)
+		{
+			pas = pas_normal;
 		}
 		double phi = 2.0*asin(((double)rand()/(double)RAND_MAX)*(2)-1);
 		double theta = phi + theta_past;
@@ -118,7 +149,10 @@ class bacteria
 			y_position -= pas*sin(theta);
 		}
 		temps = pas/vitesse;
-		temps_past = temps;
+		temps_past[iterateur] = temps_past[iterateur-1] + temps;
+		x_past[iterateur] = x_position;
+		y_past[iterateur] = y_position;
+		iterateur += 1;
 		return temps;
 	}
 
@@ -134,7 +168,7 @@ int main()
 {
 	srand (time(NULL));
 	freopen( "marcheur.txt", "w", stdout );
-	int nombre_de_bacteries = 500;
+	int nombre_de_bacteries = 1;
   bacteria bac[nombre_de_bacteries];
 	double tps[nombre_de_bacteries];
 
