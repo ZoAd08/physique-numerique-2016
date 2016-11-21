@@ -66,7 +66,7 @@ class bacteria
 		temps_past[0] = 0.;
 		theta_past = 0;
 		iterateur = 1;
-		double radius = 5;
+		double radius = 1000;
 		int compteur = 0;
 		while(compteur < 1 )
 		{
@@ -90,13 +90,13 @@ class bacteria
 	//evolution dans le temps d'une bactérie
 	double evolution()
 	{
-		double vitesse = 2.41; //micronse-1/seconde
-		double pas_normal = 2.025; //microns
+		double vitesse = 20; //micronse/seconde
+		double pas_normal = 200; //microns
 		double sens1 = 3; //secondes
 		double sens2 = 1; //secondes
 		double a = temps_past[iterateur - 1] - sens1;
 		double b = temps_past[iterateur - 1] - sens2;
-		double x1,x2,y1,y2;
+		double x1,x2,y1,y2,pas;
 
 		if (iterateur <= 10)
 		{
@@ -122,28 +122,28 @@ class bacteria
 				}
 			}
 		}
-		long double concentration1 = 10*exp(-0.2*(pow(x1,2) + pow(y1,2)));
-		long double concentration2 = 10*exp(-0.2*(pow(x2,2) + pow(y2,2)));
+		long double concentration1 = 1000*exp(-0.0002*(pow(x1,2) + pow(y1,2)));
+		long double concentration2 = 1000*exp(-0.0002*(pow(x2,2) + pow(y2,2)));
 		long double concentration = concentration1 - concentration2;
-		double pas = 1;
 		if(concentration < 0)
 		{
-			pas = 0.1*pas_normal;
+			pas = 1.5*pas_normal;
 		}
 		if(concentration > 0)
 		{
-			pas = 0.01*pas_normal;
+			pas = 0.5*pas_normal;
+			//std::cout << "NAN" << std::endl;
 		}
 		if(concentration == 0)
 		{
-			pas = 0.01*pas_normal;
+			pas = pas_normal;
 		}
 		double phi = 2.0*asin(((double)rand()/(double)RAND_MAX)*(2)-1);
 		double theta = phi + theta_past;
 		theta_past = theta;
 		x_position += pas*cos(theta);
 		y_position += pas*sin(theta);
-		if((pow(x_position,2)+pow(y_position,2) > pow(5,2)))
+		if((pow(x_position,2)+pow(y_position,2) > pow(1000,2)))
 		{
 			x_position -= pas*cos(theta);
 			y_position -= pas*sin(theta);
@@ -168,7 +168,7 @@ int main()
 {
 	srand (time(NULL));
 	freopen( "marcheur.txt", "w", stdout );
-	int nombre_de_bacteries = 50;
+	int nombre_de_bacteries = 100;
   bacteria bac[nombre_de_bacteries];
 	double tps[nombre_de_bacteries];
 
@@ -176,8 +176,8 @@ int main()
 	{
 		bac[i].enregistrement();
 	}
-	int k = 0;
-	while(k < 20000)
+	double k = 0;
+	while(k < 1200)
 	{
 		int min = minimum(tps , nombre_de_bacteries);
 		double value = tps[min];
@@ -190,9 +190,9 @@ int main()
 		{
 			bac[i].enregistrement();
 		}
+		k += value;
 		min = 0;
 		value = 0;
-		k += 1;
 	}
 
   return 0;
