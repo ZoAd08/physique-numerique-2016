@@ -19,8 +19,8 @@ from numpy import transpose
 import time
 start_time = time.time()
 
-marcheur = 500
-radius = 10.
+marcheur = 250
+radius = 2.
 data = np.loadtxt("marcheur.txt")
 x=np.zeros((2,marcheur))
 y=np.zeros((2,marcheur))

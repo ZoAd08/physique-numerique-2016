@@ -72,6 +72,7 @@ double f(int step, float taille, double radius, int marcheur)
 {
 	double x[step][marcheur], y[step][marcheur], theta;
 	double a[marcheur];
+	double M_PI=3.14159265359;
 	for (int i=1 ; i<step; ++i)
 	{
 		for (int j=0 ; j<marcheur ; ++j)
@@ -132,6 +133,6 @@ int main()
 	srand (time(NULL));
 	freopen( "marcheur.txt", "w", stdout );
 	double r;
-	r=f(500,0.1,10,1000);
+	r=f(500,0.1,2,250);
 	return 0;
 }

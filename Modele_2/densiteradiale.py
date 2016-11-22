@@ -44,6 +44,8 @@ for i in np.linspace(0,radius-pas,radius/pas):
 # print densite
 
 plt.figure(4)
-plt.plot(R,nb_points, 'bo', linewidth=2.0)
-plt.plot(R,densite, 'ro', linewidth=2.0)
+p1=plt.plot(R,nb_points, 'b-.o', label="Nombre de bacteries", linewidth=2.0)
+p2=plt.plot(R,densite, 'r-.o',label="Densite surfacique de bacteries", linewidth=2.0)
+plt.xlabel("Rayon")
+plt.legend()
 plt.show()
