@@ -4,8 +4,8 @@
  *  @date    18/11/2016
  *  @version 1.0
  *  @resume Déplacement de bactéries dans un gradient de nutriment. Les bactéries
- 						ne sont sensibles qu'à la concentration. La longueur de leur run est
-						proportionnelle à la concentration.
+ 	    ne sont sensibles qu'à la concentration. La longueur de leur run est
+	    proportionnelle à la concentration.
 *******************************************************************************/
 
 
@@ -16,6 +16,7 @@
 #include <cmath>
 #include <fstream>
 #include <ctime>
+#include <new>
 
 
 
@@ -44,17 +45,16 @@ int minimum(double array[] , int dimension)
 
 
 
-//creation d'un objet bactérie qui est entièrement déterminé par sa position ainsi
-//que par le temps avant son prochain tumble
+//creation d'un objet bactérie qui est entièrement déterminé par sa position ainsi que par le temps avant son prochain tumble
 class bacteria
 {
 	private:
 	double x_position;
 	double y_position;
-	double x_past[20000];
-	double y_past[20000];
-	double temps_past[20000];
-	double temps;
+	double* x_past = new double[99999999];
+	double* y_past = new double[99999999];
+	double* temps_past = new double[99999999];
+	long double temps;
 	double theta_past;
 	int iterateur;
 
@@ -68,7 +68,7 @@ class bacteria
 		iterateur = 1;
 		double radius = 1000;
 		int compteur = 0;
-		while(compteur < 1 )
+		while(compteur < 1 ) //distribution au hasard dans un disque de rayon = radius
 		{
 			double l = ((double)rand()/(double)RAND_MAX)*(2*radius)-radius;
 			double m = ((double)rand()/(double)RAND_MAX)*(2*radius)-radius;
@@ -87,7 +87,7 @@ class bacteria
 		}
   }
 
-	//evolution dans le temps d'une bactérie
+	//evolution dans le temps d'une bactérie, renvoie le temps avant le prochain tumble
 	double evolution()
 	{
 		double vitesse = 20; //micronse/seconde
@@ -98,7 +98,7 @@ class bacteria
 		double b = temps_past[iterateur - 1] - sens2;
 		double x1,x2,y1,y2,pas;
 
-		if (iterateur <= 10)
+		if (iterateur <= 10) //initialisation de la simulation avec une marche aléatoire de 9 pas sans mémoire
 		{
 			x1 = 0;
 			y1 = 0;
@@ -106,7 +106,7 @@ class bacteria
 			y2 = 0;
 		}
 
-		if(iterateur > 10)
+		if(iterateur > 10) //prise en compte du gradient de concentration par la bactérie
 		{
 			for(int i = 0; i < iterateur ; ++i)
 			{
@@ -122,9 +122,11 @@ class bacteria
 				}
 			}
 		}
-		long double concentration1 = 1000*exp(-0.00005*(pow(x1,2) + pow(y1,2)));
-		long double concentration2 = 1000*exp(-0.00005*(pow(x2,2) + pow(y2,2)));
-		long double concentration = concentration1 - concentration2;
+
+
+		long double concentration = x1 - x2 ;//1000*exp(-0.000005*(pow(x1,2) + pow(y1,2))); - 1000*exp(-0.000005*(pow(x2,2) + pow(y2,2)));
+
+		//fonction de réponse de la bactérie en fonction de la différence de concentration à deux instants
 		if(concentration < 0)
 		{
 			pas = 1.5*pas_normal;
@@ -132,18 +134,19 @@ class bacteria
 		if(concentration > 0)
 		{
 			pas = 0.5*pas_normal;
-			//std::cout << "NAN" << std::endl;
 		}
 		if(concentration == 0)
 		{
 			pas = pas_normal;
 		}
-		double phi = 2.0*asin(((double)rand()/(double)RAND_MAX)*(2)-1);
-		double theta = - phi + theta_past;
+
+		double phi = 2.0*asin(((double)rand()/(double)RAND_MAX)*(2)-1); //distribution de l'angle entre deux directions de run après un tumble
+		double theta = - phi + theta_past; //angle de projection en coordonnées polaires.
 		theta_past = theta;
 		x_position += pas*cos(theta);
 		y_position += pas*sin(theta);
-		if((pow(x_position,2)+pow(y_position,2) > pow(1000,2)))
+
+		if((pow(x_position,2)+pow(y_position,2) > pow(1000,2))) //condition aux limites réflective
 		{
 			x_position -= pas*cos(theta);
 			y_position -= pas*sin(theta);
@@ -164,7 +167,7 @@ class bacteria
 };
 
 
-const int nombre_de_bacteries = 1;
+const int nombre_de_bacteries = 500;
 
 int main()
 {
@@ -178,22 +181,29 @@ int main()
 		bac[i].enregistrement();
 	}
 	double k = 0;
-	while(k < 1200)
+	while(k < 3600)
 	{
 		int min = minimum(tps , nombre_de_bacteries);
-		double value = tps[min];
+		long double value = tps[min];
 		for (int i = 0; i < nombre_de_bacteries; ++i)
 		{
 			tps[i] -= value;
 		}
 		tps[min] += bac[min].evolution();
-		for (int i = 0; i < nombre_de_bacteries; ++i)
-		{
-			bac[i].enregistrement();
-		}
+
+		//for (int i = 0; i < nombre_de_bacteries; ++i)
+		//{
+		//	bac[i].enregistrement();
+		//}
+
 		k += value;
+		
 		min = 0;
 		value = 0;
+	}
+	for(int i = 0; i < nombre_de_bacteries; ++i)
+	{
+		bac[i].enregistrement();
 	}
 
   return 0;

@@ -30,13 +30,12 @@ for i in range(len(data[:,0])+1):
 			y[i,j]=data[marcheur*i+j,1]
 
 legend_nbmarcheurs = "Nombre de bacteries : " + str(marcheur) + "\n"
-legend_nbpas = "Nombre de pas : " + str(len(x[:,0])+1)
+legend_nbpas = "Temps : " + str(len(x[:,0])+1)
 plt.figure(1)
 for i in range(marcheur):
     plt.plot(x[-1,i],y[-1,i],'ro')
     plt.plot(x[0,i],y[0,i],'bo')
     plt.plot(x[:,i],y[:,i])
-    print x[-1,i]
 circle1 = plt.Circle((0, 0), radius, color='b',fill=False)
 ax = plt.gca()
 ax.add_artist(circle1)
