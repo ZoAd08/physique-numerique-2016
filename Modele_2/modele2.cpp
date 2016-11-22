@@ -96,7 +96,7 @@ class bacteria
 		double sens2 = 1; //secondes
 		double a = temps_past[iterateur - 1] - sens1;
 		double b = temps_past[iterateur - 1] - sens2;
-		double x1,x2,y1,y2,pas;
+		double x1,x2,y1,y2,pas,theta;
 
 		if (iterateur <= 10) //initialisation de la simulation avec une marche aléatoire de 9 pas sans mémoire
 		{
@@ -124,24 +124,30 @@ class bacteria
 		}
 
 
-		long double concentration = x1 - x2 ;//1000*exp(-0.000005*(pow(x1,2) + pow(y1,2))); - 1000*exp(-0.000005*(pow(x2,2) + pow(y2,2)));
+		long double concentration = 1000*exp(-0.000005*(pow(x1,2) + pow(y1,2))) - 1000*exp(-0.000005*(pow(x2,2) + pow(y2,2)));
 
 		//fonction de réponse de la bactérie en fonction de la différence de concentration à deux instants
 		if(concentration < 0)
 		{
-			pas = 1.5*pas_normal;
+			pas = 2*pas_normal;
 		}
 		if(concentration > 0)
 		{
-			pas = 0.5*pas_normal;
+			pas = 0.2*pas_normal;
 		}
 		if(concentration == 0)
 		{
 			pas = pas_normal;
 		}
-
-		double phi = 2.0*asin(((double)rand()/(double)RAND_MAX)*(2)-1); //distribution de l'angle entre deux directions de run après un tumble
-		double theta = - phi + theta_past; //angle de projection en coordonnées polaires.
+		if(iterateur == 1)
+		{
+			theta = ((double)rand()/(double)RAND_MAX)*(2*M_PI);	
+		}
+		if(iterateur > 1)
+		{
+			double phi = 2.0*asin(((double)rand()/(double)RAND_MAX)*(2)-1); //distribution de l'angle entre deux directions de run après un tumble
+			theta = - phi + theta_past; //angle de projection en coordonnées polaires.
+		}
 		theta_past = theta;
 		x_position += pas*cos(theta);
 		y_position += pas*sin(theta);
@@ -167,7 +173,7 @@ class bacteria
 };
 
 
-const int nombre_de_bacteries = 500;
+const int nombre_de_bacteries = 1000;
 
 int main()
 {
