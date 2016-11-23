@@ -92,8 +92,8 @@ class bacteria
 	{
 		double vitesse = 20; //micronse/seconde
 		double pas_normal = 20; //microns
-		double sens1 = 3; //secondes
-		double sens2 = 1; //secondes
+		double sens1 = 3; //3secondes
+		double sens2 = 0; //secondes
 		double a = temps_past[iterateur - 1] - sens1;
 		double b = temps_past[iterateur - 1] - sens2;
 		double x1,x2,y1,y2,pas,theta;
@@ -108,14 +108,14 @@ class bacteria
 
 		if(iterateur > 10) //prise en compte du gradient de concentration par la bactérie
 		{
-			for(int i = 0; i < iterateur ; ++i)
+			for(int i = iterateur-1; i >=0 ; --i) 
 			{
-				if(a < temps_past[i])
+				if(a <= temps_past[i])
 				{
 					x1 = x_past[i]-((temps_past[i]-a)*(vitesse));
 					y1 = y_past[i]-((temps_past[i]-a)*(vitesse));
 				}
-				if(b < temps_past[i])
+				if(b <= temps_past[i])
 				{
 					x2 = x_past[i]-((temps_past[i]-b)*(vitesse));
 					y2 = y_past[i]-((temps_past[i]-b)*(vitesse));
@@ -124,7 +124,8 @@ class bacteria
 		}
 
 
-		long double concentration = 1000*exp(-0.000005*(pow(x1,2) + pow(y1,2))) - 1000*exp(-0.000005*(pow(x2,2) + pow(y2,2)));
+		double concentration = 10*exp(-0.000005*(pow(x1,2) + pow(y1,2))) - 10*exp(-0.000005*(pow(x2,2) + pow(y2,2)));
+
 
 		//fonction de réponse de la bactérie en fonction de la différence de concentration à deux instants
 		if(concentration < 0)
@@ -152,7 +153,7 @@ class bacteria
 		x_position += pas*cos(theta);
 		y_position += pas*sin(theta);
 
-		if((pow(x_position,2)+pow(y_position,2) > pow(1000,2))) //condition aux limites réflective
+		if((pow(x_position,2)+pow(y_position,2) > pow(100000,2))) //condition aux limites réflective
 		{
 			x_position -= pas*cos(theta);
 			y_position -= pas*sin(theta);
@@ -173,7 +174,7 @@ class bacteria
 };
 
 
-const int nombre_de_bacteries = 1000;
+const int nombre_de_bacteries = 500;
 
 int main()
 {

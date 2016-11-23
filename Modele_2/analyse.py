@@ -15,7 +15,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 import matplotlib.lines as mlines
 
-marcheur = 1
+marcheur = 10
 radius = 1000.
 data = np.loadtxt("marcheur.txt")
 x=np.zeros(((int(len(data[:,0])/marcheur)),marcheur))
