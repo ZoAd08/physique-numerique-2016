@@ -92,8 +92,8 @@ class bacteria
 	{
 		double vitesse = 20; //micronse/seconde
 		double pas_normal = 20; //microns
-		double sens1 = 3; //3secondes
-		double sens2 = 0; //secondes
+		double sens1 = 3.5; //3secondes
+		double sens2 = 1.5; //secondes
 		double a = temps_past[iterateur - 1] - sens1;
 		double b = temps_past[iterateur - 1] - sens2;
 		double x1,x2,y1,y2,pas,theta;
@@ -108,7 +108,7 @@ class bacteria
 
 		if(iterateur > 10) //prise en compte du gradient de concentration par la bactérie
 		{
-			for(int i = iterateur-1; i >=0 ; --i) 
+			for(int i = iterateur-1; i >= 0 ; --i) 
 			{
 				if(a <= temps_past[i])
 				{
@@ -124,17 +124,17 @@ class bacteria
 		}
 
 
-		double concentration = 10*exp(-0.000005*(pow(x1,2) + pow(y1,2))) - 10*exp(-0.000005*(pow(x2,2) + pow(y2,2)));
+		double concentration = 10*exp(-0.00005*(pow(x1,2) + pow(y1,2))) - 10*exp(-0.00005*(pow(x2,2) + pow(y2,2)));
 
 
 		//fonction de réponse de la bactérie en fonction de la différence de concentration à deux instants
 		if(concentration < 0)
 		{
-			pas = 2*pas_normal;
+			pas = 2.*pas_normal;
 		}
 		if(concentration > 0)
 		{
-			pas = 0.2*pas_normal;
+			pas = 0.5*pas_normal;
 		}
 		if(concentration == 0)
 		{
@@ -188,7 +188,7 @@ int main()
 		bac[i].enregistrement();
 	}
 	double k = 0;
-	while(k < 3600)
+	while(k < 5000)
 	{
 		int min = minimum(tps , nombre_de_bacteries);
 		long double value = tps[min];
@@ -198,11 +198,13 @@ int main()
 		}
 		tps[min] += bac[min].evolution();
 
-		//for (int i = 0; i < nombre_de_bacteries; ++i)
-		//{
-		//	bac[i].enregistrement();
-		//}
+/*
+		for (int i = 0; i < nombre_de_bacteries; ++i) //permet d'enregistrer toutes les trajectoires (lent)
+		{
+			bac[i].enregistrement();
+		}
 
+*/
 		k += value;
 		
 		min = 0;
