@@ -16,8 +16,10 @@ import numpy as np
 
 #extraction des donnees
 
-marcheur = 10
-radius = 5.
+config = np.loadtxt("config.txt")
+marcheur = config[0]
+temps = config[1]
+radius = 1000.
 data = np.loadtxt("marcheur.txt")
 x=np.zeros(((int(len(data[:,0])/marcheur)),marcheur))
 y=np.zeros(((int(len(data[:,0])/marcheur)),marcheur))
@@ -41,7 +43,7 @@ time_text = ax.text(0.02, 0.95, '', transform=ax.transAxes)
 circle1 = plt.Circle((0, 0), radius, color='b',fill=False)
 ax = plt.gca()
 ax.add_artist(circle1)
-line, = ax.plot([], [], 'r.', ms=5)
+line, = ax.plot([], [], 'ro', ms=5)
 
 
 
@@ -60,7 +62,7 @@ def animate(i):
 #trace de l'animation
 
 
-ani = animation.FuncAnimation(fig, animate, frames=len(x[:,0]), interval=1000, blit=True, repeat=True)
+ani = animation.FuncAnimation(fig, animate, frames=len(x[:,0]), interval=10, blit=False, repeat=True)
 
 legend_nbmarcheurs = "Nombre de bacteries : " + str(marcheur) + "\n"
 legend_nbpas = "Nombre de pas : " + str(len(x[:,0])-1)

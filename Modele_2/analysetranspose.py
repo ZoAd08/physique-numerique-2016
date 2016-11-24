@@ -19,7 +19,9 @@ from numpy import transpose
 import time
 start_time = time.time()
 
-marcheur = 500
+config = np.loadtxt("config.txt")
+marcheur = int(config[0])
+temps = config[1]
 radius = 1000.
 data = np.loadtxt("marcheur.txt")
 x=np.zeros((2,marcheur))
@@ -32,7 +34,7 @@ y[1,:]=data[len(data[:,0])-marcheur:len(data[:,0]),1].transpose()
 
 
 legend_nbmarcheurs = "Nombre de bacteries : " + str(marcheur) + "\n"
-legend_nbpas = "Nombre de pas : " + str((len(data[:,0])/marcheur)-1)
+legend_nbpas = "Temps : " + str(temps)
 plt.figure(3)
 for i in range(marcheur):
 	plt.plot(x[0,i],y[0,i],'b.')
@@ -47,6 +49,6 @@ plt.axis('equal')
 Init = mlines.Line2D([], [], color='blue', marker=".",markersize=15, label='Position initiale')
 Fin = mlines.Line2D([], [], color='red', marker=".",markersize=15, label='Position finale')
 plt.legend(handles=[Init,Fin])
-plt.title(legend_nbmarcheurs + legend_nbpas)
+plt.title(legend_nbmarcheurs)
 plt.show()
 print "--- %s seconds ---" % (time.time() - start_time)

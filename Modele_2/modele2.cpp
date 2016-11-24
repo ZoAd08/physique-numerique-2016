@@ -1,12 +1,11 @@
-/*******************************************************************************
+/***********************************************************************************
  *  @file    modele2.cpp
  *  @author  Benjamin GALLOIS
  *  @date    18/11/2016
  *  @version 1.0
  *  @resume Déplacement de bactéries dans un gradient de nutriment. Les bactéries
- 	    ne sont sensibles qu'à la concentration. La longueur de leur run est
-	    proportionnelle à la concentration.
-*******************************************************************************/
+ 	    ne sont sensibles qu'à la différence de concentration prise entre deux instants.
+************************************************************************************/
 
 
 
@@ -108,7 +107,7 @@ class bacteria
 
 		if(iterateur > 10) //prise en compte du gradient de concentration par la bactérie
 		{
-			for(int i = iterateur-1; i >= 0 ; --i) 
+			for(int i = iterateur-1; i >= 0 ; --i)
 			{
 				if(a <= temps_past[i])
 				{
@@ -142,7 +141,7 @@ class bacteria
 		}
 		if(iterateur == 1)
 		{
-			theta = ((double)rand()/(double)RAND_MAX)*(2*M_PI);	
+			theta = ((double)rand()/(double)RAND_MAX)*(2*M_PI);
 		}
 		if(iterateur > 1)
 		{
@@ -153,7 +152,7 @@ class bacteria
 		x_position += pas*cos(theta);
 		y_position += pas*sin(theta);
 
-		if((pow(x_position,2)+pow(y_position,2) > pow(100000,2))) //condition aux limites réflective
+		if((pow(x_position,2)+pow(y_position,2) > pow(1000,2))) //condition aux limites réflective
 		{
 			x_position -= pas*cos(theta);
 			y_position -= pas*sin(theta);
@@ -174,7 +173,7 @@ class bacteria
 };
 
 
-const int nombre_de_bacteries = 500;
+const int nombre_de_bacteries = 200;
 
 int main()
 {
@@ -188,7 +187,7 @@ int main()
 		bac[i].enregistrement();
 	}
 	double k = 0;
-	while(k < 5000)
+	while(k < 1000)
 	{
 		int min = minimum(tps , nombre_de_bacteries);
 		long double value = tps[min];
@@ -203,17 +202,20 @@ int main()
 		{
 			bac[i].enregistrement();
 		}
-
 */
+
 		k += value;
-		
+
 		min = 0;
 		value = 0;
 	}
+
 	for(int i = 0; i < nombre_de_bacteries; ++i)
 	{
 		bac[i].enregistrement();
 	}
 
+	freopen( "config.txt", "w", stdout );
+	printf ( "%.3d %.20f \n", nombre_de_bacteries , k);
   return 0;
 }
