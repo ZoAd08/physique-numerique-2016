@@ -58,7 +58,7 @@ class bacteria
 	int iterateur;
 	double vitesse = 20; //micronse/seconde
 	double pas_normal = 20; //microns
-	double sens1 = 3.5; //3secondes
+	double sens1 = 4.5; //3secondes
 	double sens2 = 1.5; //secondes
 
 	public:
@@ -90,14 +90,15 @@ class bacteria
 		}
   }
 
-	//evolution dans le temps d'une bactérie, renvoie le temps avant le prochain tumble
+/*Permet de déterminer l'évolution dans le temps d'une bactérie. La simulation commence avec l'apparition aléatoire de la bactérie dans une disque. Elle effectue d'abord une marche aléatoire qui suit une distribution d'angle en accord avec les données expérimentales relevées dans la littérature, en négligeant l'effet du gradient de concentration de nutriment de 9 pas. Après 10 pas, la bactérie effectue une marche aléatoire biaisée, elle compare la valeur du gradient de concentration entre deux instants antérieurs et allonge(resp réduit) son run si elle se déplace vers une zone plus (resp moins) concentrée. La fonction renvoie le temps qu'il reste avant le prochain tumble de la bactérie.
+*/
 	double evolution()
 	{
 		double a = temps_past[iterateur - 1] - sens1;
 		double b = temps_past[iterateur - 1] - sens2;
 		double x1,x2,y1,y2,pas,theta;
 
-		if (iterateur <= 10) //initialisation de la simulation avec une marche aléatoire de 9 pas sans mémoire
+		if (iterateur <= 10) 
 		{
 			x1 = 0;
 			y1 = 0;
@@ -105,7 +106,7 @@ class bacteria
 			y2 = 0;
 		}
 
-		if(iterateur > 10) //prise en compte du gradient de concentration par la bactérie
+		if(iterateur > 10) 
 		{
 			for(int i = iterateur-1; i >= 0 ; --i)
 			{
@@ -123,10 +124,10 @@ class bacteria
 		}
 
 
-		double concentration = 10*exp(-0.00005*(pow(x1,2) + pow(y1,2))) - 10*exp(-0.00005*(pow(x2,2) + pow(y2,2)));
+		double concentration = 100*exp(-0.00005*(pow(x1,2) + pow(y1,2))) - 10*exp(-0.00005*(pow(x2,2) + pow(y2,2)));
 
 
-		//fonction de réponse de la bactérie en fonction de la différence de concentration à deux instants
+		//fonction de réponse de la bactérie en fonction de la différence de concentration entre deux instants
 		if(concentration < 0)
 		{
 			pas = 2.*pas_normal;
@@ -152,10 +153,11 @@ class bacteria
 		x_position += pas*cos(theta);
 		y_position += pas*sin(theta);
 
-		if((pow(x_position,2)+pow(y_position,2) > pow(1000,2))) //condition aux limites réflective
+		if((pow(x_position,2)+pow(y_position,2) > pow(1000,2))) //condition aux limites réflectives
 		{
-			x_position -= pas*cos(theta);
-			y_position -= pas*sin(theta);
+			x_position -= 2*pas*cos(theta);
+			y_position -= 2*pas*sin(theta);
+			theta_past = - theta;
 		}
 		temps = pas/vitesse;
 		temps_past[iterateur] = temps_past[iterateur-1] + temps;
@@ -165,12 +167,13 @@ class bacteria
 		return temps;
 	}
 
-	//enregistrement des coordonnées dans un fichier .txt
+//enregistrement de la trajectoire dans un fichier .txt
 	void enregistrement()
 	{
-		printf ( "%.3f %.20f \t %.20u \n", x_position,y_position,0);
+		printf ( "%.3f %.20f \t", x_position,y_position);
 	}
 
+//enregistrement de la position finale des bactéries en discernant les bactéries en run (1), et les bactéries en tumble (0)
 	void position_final()
 	{
 		double x_final, y_final;
@@ -189,13 +192,13 @@ class bacteria
 };
 
 
-const int nombre_de_bacteries = 1000;
+const int nombre_de_bacteries = 500;
 
 int main()
 {
 	srand (time(NULL));
 	freopen( "marcheur.txt", "w", stdout );
-  bacteria bac[nombre_de_bacteries];
+	bacteria bac[nombre_de_bacteries];
 	double tps[nombre_de_bacteries];
 
 	for(int i = 0; i < nombre_de_bacteries; ++i)

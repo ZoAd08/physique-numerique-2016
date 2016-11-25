@@ -37,7 +37,7 @@ runvstumble[1,:]=data[len(data[:,0])-marcheur:len(data[:,0]),2].transpose()
 
 
 legend_nbmarcheurs = "Nombre de bacteries : " + str(marcheur) + "\n"
-legend_nbpas = "Temps : " + str(temps)
+legend_nbpas = "Temps (secondes) : " + str(temps)
 plt.figure(3)
 for i in range(marcheur):
 	if runvstumble[1,i] == 0 :
