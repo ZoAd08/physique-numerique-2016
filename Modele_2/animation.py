@@ -17,7 +17,7 @@ import numpy as np
 #extraction des donnees
 
 config = np.loadtxt("config.txt")
-marcheur = config[0]
+marcheur = int(config[0])
 temps = config[1]
 radius = 1000.
 data = np.loadtxt("marcheur.txt")
@@ -65,6 +65,6 @@ def animate(i):
 ani = animation.FuncAnimation(fig, animate, frames=len(x[:,0]), interval=10, blit=False, repeat=True)
 
 legend_nbmarcheurs = "Nombre de bacteries : " + str(marcheur) + "\n"
-legend_nbpas = "Nombre de pas : " + str(len(x[:,0])-1)
+legend_nbpas = "Temps : " + str(temps)
 plt.title(legend_nbmarcheurs + legend_nbpas)
 plt.show()

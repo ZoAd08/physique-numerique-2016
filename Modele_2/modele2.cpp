@@ -171,7 +171,7 @@ class bacteria
 		printf ( "%.3f %.20f \t %.20u \n", x_position,y_position,0);
 	}
 
-	void position_final(double time)
+	void position_final()
 	{
 		double x_final, y_final;
 		if(temps == 0)
@@ -181,15 +181,15 @@ class bacteria
 		
 		else
 		{
-			x_final = - ((temps - time)/(vitesse)) + x_position;
-			y_final = - ((temps - time)/(vitesse)) + y_position;
+			x_final = - ((temps)*(vitesse)) + x_position;
+			y_final = - ((temps)*(vitesse)) + y_position;
 			printf ( "%.3f %.20f \t %.20u \n", x_final,y_final,1);
 		}	
 	}
 };
 
 
-const int nombre_de_bacteries = 200;
+const int nombre_de_bacteries = 1000;
 
 int main()
 {
@@ -203,7 +203,7 @@ int main()
 		bac[i].enregistrement();
 	}
 	double k = 0;
-	while(k < 1000)
+	while(k < 3000)
 	{
 		int min = minimum(tps , nombre_de_bacteries);
 		long double value = tps[min];
@@ -228,7 +228,7 @@ int main()
 
 	for(int i = 0; i < nombre_de_bacteries; ++i)
 	{
-		bac[i].position_final(k);
+		bac[i].position_final();
 	}
 
 	freopen( "config.txt", "w", stdout );

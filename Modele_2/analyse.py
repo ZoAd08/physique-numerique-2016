@@ -16,7 +16,7 @@ import matplotlib.pyplot as plt
 import matplotlib.lines as mlines
 
 config = np.loadtxt("config.txt")
-marcheur = config[0]
+marcheur = int(config[0])
 temps = config[1]
 radius = 1000.
 data = np.loadtxt("marcheur.txt")
@@ -32,7 +32,7 @@ for i in range(len(data[:,0])+1):
 			y[i,j]=data[marcheur*i+j,1]
 
 legend_nbmarcheurs = "Nombre de bacteries : " + str(marcheur) + "\n"
-legend_nbpas = "Temps : " + str(len(x[:,0])+1)
+legend_nbpas = "Temps : " + str(temps)
 plt.figure(1)
 for i in range(marcheur):
     plt.plot(x[-1,i],y[-1,i],'ro')

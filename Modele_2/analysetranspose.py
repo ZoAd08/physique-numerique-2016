@@ -19,7 +19,9 @@ from numpy import transpose
 import time
 start_time = time.time()
 
-marcheur = 500
+config = np.loadtxt("config.txt")
+marcheur = int(config[0])
+temps = config[1]
 radius = 1000.
 data = np.loadtxt("marcheur.txt")
 x=np.zeros((2,marcheur))
@@ -35,14 +37,14 @@ runvstumble[1,:]=data[len(data[:,0])-marcheur:len(data[:,0]),2].transpose()
 
 
 legend_nbmarcheurs = "Nombre de bacteries : " + str(marcheur) + "\n"
-legend_nbpas = "Nombre de pas : " + str((len(data[:,0])/marcheur)-1)
+legend_nbpas = "Temps : " + str(temps)
 plt.figure(3)
 for i in range(marcheur):
 	if runvstumble[1,i] == 0 :
-		plt.plot(x[0,i],y[0,i],'b.')
+		plt.plot(x[-1,i],y[-1,i],'r.')
 	if runvstumble[1,i] == 1 :
-		plt.plot(x[0,i],y[0,i],'g.')
-	plt.plot(x[-1,i],y[-1,i],'r.')
+		plt.plot(x[-1,i],y[-1,i],'g.')
+	plt.plot(x[0,i],y[0,i],'b.')
 
 circle1 = plt.Circle((0, 0), radius, color='b',fill=False)
 ax = plt.gca()
@@ -51,8 +53,9 @@ plt.ylim((-radius,radius))
 plt.xlim((-radius,radius))
 plt.axis('equal')
 Init = mlines.Line2D([], [], color='blue', marker=".",markersize=15, label='Position initiale')
-Fin = mlines.Line2D([], [], color='red', marker=".",markersize=15, label='Position finale')
-plt.legend(handles=[Init,Fin])
+Fin = mlines.Line2D([], [], color='red', marker=".",markersize=15, label='Position finale tumble')
+Fin2 = mlines.Line2D([], [], color='green', marker=".",markersize=15, label='Position finale run')
+plt.legend(handles=[Init,Fin,Fin2])
 plt.title(legend_nbmarcheurs + legend_nbpas)
 plt.show()
 print "--- %s seconds ---" % (time.time() - start_time)
