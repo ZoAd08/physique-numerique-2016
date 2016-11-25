@@ -56,6 +56,10 @@ class bacteria
 	long double temps;
 	double theta_past;
 	int iterateur;
+	double vitesse = 20; //micronse/seconde
+	double pas_normal = 20; //microns
+	double sens1 = 3.5; //3secondes
+	double sens2 = 1.5; //secondes
 
 	public:
 	//constructeur
@@ -89,10 +93,6 @@ class bacteria
 	//evolution dans le temps d'une bactérie, renvoie le temps avant le prochain tumble
 	double evolution()
 	{
-		double vitesse = 20; //micronse/seconde
-		double pas_normal = 20; //microns
-		double sens1 = 3.5; //3secondes
-		double sens2 = 1.5; //secondes
 		double a = temps_past[iterateur - 1] - sens1;
 		double b = temps_past[iterateur - 1] - sens2;
 		double x1,x2,y1,y2,pas,theta;
@@ -168,7 +168,23 @@ class bacteria
 	//enregistrement des coordonnées dans un fichier .txt
 	void enregistrement()
 	{
-		printf ( "%.3f %.20f \n", x_position,y_position);
+		printf ( "%.3f %.20f \t %.20u \n", x_position,y_position,0);
+	}
+
+	void position_final(double time)
+	{
+		double x_final, y_final;
+		if(temps == 0)
+		{
+			printf ( "%.3f %.20f \t %.20u \n", x_position,y_position,0);
+		}
+		
+		else
+		{
+			x_final = - ((temps - time)/(vitesse)) + x_position;
+			y_final = - ((temps - time)/(vitesse)) + y_position;
+			printf ( "%.3f %.20f \t %.20u \n", x_final,y_final,1);
+		}	
 	}
 };
 
@@ -212,7 +228,7 @@ int main()
 
 	for(int i = 0; i < nombre_de_bacteries; ++i)
 	{
-		bac[i].enregistrement();
+		bac[i].position_final(k);
 	}
 
 	freopen( "config.txt", "w", stdout );
