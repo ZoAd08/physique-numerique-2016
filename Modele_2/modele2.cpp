@@ -124,7 +124,7 @@ class bacteria
 		}
 
 
-		double concentration = 100*exp(-0.00005*(pow(x1,2) + pow(y1,2))) - 10*exp(-0.00005*(pow(x2,2) + pow(y2,2)));
+		double concentration = 100*exp(-0.0005*(pow(x1,2) + pow(y1,2))) - 10*exp(-0.0005*(pow(x2,2) + pow(y2,2)));
 
 
 		//fonction de réponse de la bactérie en fonction de la différence de concentration entre deux instants
@@ -170,7 +170,7 @@ class bacteria
 //enregistrement de la trajectoire dans un fichier .txt
 	void enregistrement()
 	{
-		printf ( "%.3f %.20f \t", x_position,y_position);
+		printf ( "%.3f %.20f \t %.20u \n", x_position,y_position,0)
 	}
 
 //enregistrement de la position finale des bactéries en discernant les bactéries en run (1), et les bactéries en tumble (0)
