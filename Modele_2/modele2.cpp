@@ -170,7 +170,7 @@ class bacteria
 //enregistrement de la trajectoire dans un fichier .txt
 	void enregistrement()
 	{
-		printf ( "%.3f %.20f \t %.20u \n", x_position,y_position,0)
+		printf ( "%.3f %.20f \t %.20u \n", x_position,y_position,0);
 	}
 
 //enregistrement de la position finale des bactéries en discernant les bactéries en run (1), et les bactéries en tumble (0)
