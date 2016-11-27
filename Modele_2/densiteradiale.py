@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 '''/*********************************************************************************************
  *  @file    densiteradiale.py
- *  @author  Benjamin GALLOIS & Djinthana Dufour
+ *  @author  Djinthana Dufour
  *  @date    17/11/2016
  *  @version 1.0
  *  @resume  Permet de tracer la densite de bacteries en fonction du rayon
@@ -14,9 +14,11 @@ import matplotlib.pyplot as plt
 from numpy import transpose
 from scipy.spatial import KDTree
 
-marcheur = 500
-radius = 5
-pas=0.05
+config = np.loadtxt("config.txt")
+marcheur = int(config[0])
+temps = config[1]
+radius = 2000.
+pas=radius / 20
 
 data = np.loadtxt("marcheur.txt")
 x=np.zeros((2,marcheur))
@@ -44,7 +46,7 @@ for i in np.linspace(0,radius-pas,radius/pas):
 # print densite
 
 plt.figure(4)
-p1=plt.plot(R,nb_points, 'b-.o', label="Nombre de bacteries", linewidth=2.0)
+#p1=plt.plot(R,nb_points, 'b-.o', label="Nombre de bacteries", linewidth=2.0)
 p2=plt.plot(R,densite, 'r-.o',label="Densite surfacique de bacteries", linewidth=2.0)
 plt.xlabel("Rayon")
 plt.legend()

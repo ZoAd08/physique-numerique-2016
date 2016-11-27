@@ -16,6 +16,7 @@
 #include <fstream>
 #include <ctime>
 #include <new>
+#include <random>
 
 
 
@@ -54,12 +55,13 @@ class bacteria
 	double* y_past = new double[99999999];
 	double* temps_past = new double[99999999];
 	long double temps;
-	double theta_past;
+	double* theta_past = new double[99999999];
 	int iterateur;
 	double vitesse = 20; //micronse/seconde
 	double pas_normal = 20; //microns
-	double sens1 = 4.5; //3secondes
-	double sens2 = 1.5; //secondes
+	double sens1 = 3; //3secondes
+	double sens2 = 1; //secondes
+	double radius = 1000;
 
 	public:
 	//constructeur
@@ -67,7 +69,7 @@ class bacteria
 	{
     temps = 0;
 		temps_past[0] = 0.;
-		theta_past = 0;
+		theta_past[0] = 0;
 		iterateur = 1;
 		double radius = 1000;
 		int compteur = 0;
@@ -108,38 +110,43 @@ class bacteria
 
 		if(iterateur > 10) 
 		{
-			for(int i = iterateur-1; i >= 0 ; --i)
+			for(int i = iterateur-1; i >= 0 ; --i) //A VERIFIER
 			{
 				if(a <= temps_past[i])
 				{
-					x1 = x_past[i]-((temps_past[i]-a)*(vitesse));
-					y1 = y_past[i]-((temps_past[i]-a)*(vitesse));
+					x1 = (sqrt(pow(x_past[i]-x_past[i-1],2) + pow(y_past[i]-y_past[i-1],2))- ((temps_past[i]-a)*(vitesse)))*cos(theta_past[i]);
+					y1 = (sqrt(pow(x_past[i]-x_past[i-1],2) + pow(y_past[i]-y_past[i-1],2))- ((temps_past[i]-a)*(vitesse)))*sin(theta_past[i]);
 				}
 				if(b <= temps_past[i])
 				{
-					x2 = x_past[i]-((temps_past[i]-b)*(vitesse));
-					y2 = y_past[i]-((temps_past[i]-b)*(vitesse));
+					x2 = (sqrt(pow(x_past[i]-x_past[i-1],2) + pow(y_past[i]-y_past[i-1],2))- ((temps_past[i]-b)*(vitesse)))*cos(theta_past[i]);
+					y2 = (sqrt(pow(x_past[i]-x_past[i-1],2) + pow(y_past[i]-y_past[i-1],2))- ((temps_past[i]-b)*(vitesse)))*sin(theta_past[i]);
 				}
 			}
 		}
 
 
-		double concentration = 100*exp(-0.0005*(pow(x1,2) + pow(y1,2))) - 10*exp(-0.0005*(pow(x2,2) + pow(y2,2)));
+		double concentration = 1000*exp(-0.00005*(pow(x1,2) + pow(y1,2))) - 10*exp(-0.00005*(pow(x2,2) + pow(y2,2)));
 
 
 		//fonction de réponse de la bactérie en fonction de la différence de concentration entre deux instants
+		
+		std::ranlux24_base generator;
 		if(concentration < 0)
 		{
-			pas = 2.*pas_normal;
+			std::exponential_distribution<double> distribution(1/(2*pas_normal));
+			pas = distribution(generator);
 		}
-		if(concentration > 0)
+		else if(concentration > 0)
 		{
-			pas = 0.5*pas_normal;
+			std::exponential_distribution<double> distribution(1/(0.5*pas_normal));
+			pas = distribution(generator);
 		}
-		if(concentration == 0)
+		else if(concentration == 0)
 		{
 			pas = pas_normal;
 		}
+		
 		if(iterateur == 1)
 		{
 			theta = ((double)rand()/(double)RAND_MAX)*(2*M_PI);
@@ -147,19 +154,21 @@ class bacteria
 		if(iterateur > 1)
 		{
 			double phi = 2.0*asin(((double)rand()/(double)RAND_MAX)*(2)-1); //distribution de l'angle entre deux directions de run après un tumble
-			theta = - phi + theta_past; //angle de projection en coordonnées polaires.
+			theta = - phi + theta_past[iterateur-1]; //angle de projection en coordonnées polaires.
 		}
-		theta_past = theta;
+		
+		theta_past[iterateur] = theta;
 		x_position += pas*cos(theta);
 		y_position += pas*sin(theta);
-
-		if((pow(x_position,2)+pow(y_position,2) > pow(1000,2))) //condition aux limites réflectives
-		{
-			x_position -= 2*pas*cos(theta);
-			y_position -= 2*pas*sin(theta);
-			theta_past = - theta;
-		}
 		temps = pas/vitesse;
+		
+		if((pow(x_position,2)+pow(y_position,2)) > pow(10000,2)) //condition aux limites réflectives
+		{
+			x_position = radius*cos(theta);
+			y_position = radius*sin(theta);
+			theta_past[iterateur] = theta + M_PI;
+			temps = (1./vitesse)*sqrt(pow(x_position-x_past[iterateur -1],2) + pow(y_position-y_past[iterateur -1],2));
+		}
 		temps_past[iterateur] = temps_past[iterateur-1] + temps;
 		x_past[iterateur] = x_position;
 		y_past[iterateur] = y_position;
@@ -174,7 +183,7 @@ class bacteria
 	}
 
 //enregistrement de la position finale des bactéries en discernant les bactéries en run (1), et les bactéries en tumble (0)
-	void position_final()
+	void position_finale()
 	{
 		double x_final, y_final;
 		if(temps == 0)
@@ -182,10 +191,10 @@ class bacteria
 			printf ( "%.3f %.20f \t %.20u \n", x_position,y_position,0);
 		}
 		
-		else
+		else //A VERIFIER
 		{
-			x_final = - ((temps)*(vitesse)) + x_position;
-			y_final = - ((temps)*(vitesse)) + y_position;
+			x_final = (sqrt(pow(x_position-x_past[iterateur-1],2) + pow(y_position-y_past[iterateur-1],2)) -vitesse*temps)*cos(theta_past[iterateur]) ;
+			y_final = (sqrt(pow(y_position-x_past[iterateur-1],2) + pow(y_position-y_past[iterateur-1],2))-vitesse*temps)*sin(theta_past[iterateur]) ;
 			printf ( "%.3f %.20f \t %.20u \n", x_final,y_final,1);
 		}	
 	}
@@ -231,7 +240,7 @@ int main()
 
 	for(int i = 0; i < nombre_de_bacteries; ++i)
 	{
-		bac[i].position_final();
+		bac[i].position_finale();
 	}
 
 	freopen( "config.txt", "w", stdout );
