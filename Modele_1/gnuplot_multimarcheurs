@@ -1,0 +1,13 @@
+set term x11 0
+set xlabel 'Nombre de pas'
+set ylabel 'Déplacement carré moyen'
+set logscale xy
+f(x) = exp(a*log(x))
+fit f(x) 'r2vsN.txt' using 1:2 via a
+title_f(a,b) = sprintf('f(x) = %.2fx', a)
+plot "r2vsN.txt" using 1:2 title "Marches aléatoire", f(x) t title_f(a,b)
+set term x11 1
+set xlabel 'Nombre de simulation'
+set ylabel 'Déplacement carré moyen'
+plot "r2vsNM.txt" using 1:2 title "Moyenne du déplacement carré en fonction du nombre de réalisation"
+pause -1 "Hit any key to continue"

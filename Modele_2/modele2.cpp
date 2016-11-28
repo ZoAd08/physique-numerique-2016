@@ -67,7 +67,7 @@ class bacteria
 	//constructeur
 	bacteria()
 	{
-    		temps = 0;
+    temps = 0;
 		temps_past[0] = 0.;
 		theta_past[0] = 0;
 		iterateur = 1;
@@ -90,13 +90,10 @@ class bacteria
 					compteur = 0;
 			}
 		}
-  	}
+  }
 
-/*Permet de déterminer l'évolution dans le temps d'une bactérie. La simulation commence avec l'apparition aléatoire de la bactérie dans une disque.
-Elle effectue d'abord une marche aléatoire qui suit une distribution d'angle en accord avec les données expérimentales relevées dans la littérature, en négligeant l'effet
-du gradient de concentration de nutriment de 9 pas. Après 10 pas, la bactérie effectue une marche aléatoire biaisée, elle compare la valeur du gradient de concentration 
-entre deux instants antérieurs et allonge(resp réduit) son run si elle se déplace vers une zone plus (resp moins) concentrée. La fonction renvoie le temps qu'il reste 
-avant le prochain tumble de la bactérie.*/
+/*Permet de déterminer l'évolution dans le temps d'une bactérie. La simulation commence avec l'apparition aléatoire de la bactérie dans une disque. Elle effectue d'abord une marche aléatoire qui suit une distribution d'angle en accord avec les données expérimentales relevées dans la littérature, en négligeant l'effet du gradient de concentration de nutriment de 9 pas. Après 10 pas, la bactérie effectue une marche aléatoire biaisée, elle compare la valeur du gradient de concentration entre deux instants antérieurs et allonge(resp réduit) son run si elle se déplace vers une zone plus (resp moins) concentrée. La fonction renvoie le temps qu'il reste avant le prochain tumble de la bactérie.
+*/
 	double evolution()
 	{
 		double a = temps_past[iterateur - 1] - sens1;
@@ -111,7 +108,7 @@ avant le prochain tumble de la bactérie.*/
 			y2 = 0;
 		}
 
-		else if(iterateur > 10) 
+		if(iterateur > 10) 
 		{
 			for(int i = iterateur-1; i >= 0 ; --i) //A VERIFIER
 			{
@@ -155,30 +152,27 @@ avant le prochain tumble de la bactérie.*/
 			pas = pas_normal;
 		}
 		
-
 		if(iterateur == 1)
 		{
 			theta = ((double)rand()/(double)RAND_MAX)*(2*M_PI);
 		}
-
-		else if(iterateur > 1)
+		if(iterateur > 1)
 		{
 			double phi = 2.0*asin(((double)rand()/(double)RAND_MAX)*(2)-1); //distribution de l'angle entre deux directions de run après un tumble
 			theta = - phi + theta_past[iterateur-1]; //angle de projection en coordonnées polaires.
 		}
 		
-		if((pow(x_position+pas*cos(theta),2)+pow(y_position+pas*sin(theta),2)) < pow(1000,2))
+		theta_past[iterateur] = theta;
+		x_position += pas*cos(theta);
+		y_position += pas*sin(theta);
+		temps = pas/vitesse;
+		
+		if((pow(x_position,2)+pow(y_position,2)) > pow(1000,2)) //condition aux limites réflectives
 		{
-			x_position += pas*cos(theta);
-			y_position += pas*sin(theta);
-			temps = pas/vitesse;
+			x_position = radius*cos(theta);
+			y_position = radius*sin(theta);
 			theta_past[iterateur] = theta;
-		}
-
-		if((pow(x_position,2)+pow(y_position,2)) >= pow(1000,2)) //condition aux limites, si la bactérie va sortir du cercle au prochain pas elle ne bouge pas (AMELIORER)
-		{
-			theta_past[iterateur] = theta;
-			temps = 0;
+			temps = (1./vitesse)*(sqrt(pow(x_position-x_past[iterateur -1],2) + pow(y_position-y_past[iterateur -1],2)));
 		}
 		temps_past[iterateur] = temps_past[iterateur-1] + temps;
 		x_past[iterateur] = x_position;
@@ -202,7 +196,7 @@ avant le prochain tumble de la bactérie.*/
 			printf ( "%.3f %.20f \t %.20u \n", x_position,y_position,0);
 		}
 		
-		else if(temps > 0) //A VERIFIER
+		else //A VERIFIER
 		{
 			x_final = x_past[iterateur-1]+(vitesse*(k-temps_past[iterateur-1]))*cos(theta_past[iterateur]) ;
 			y_final = y_past[iterateur-1]+(vitesse*(k-temps_past[iterateur-1]))*sin(theta_past[iterateur]) ;
@@ -212,7 +206,7 @@ avant le prochain tumble de la bactérie.*/
 };
 
 
-const int nombre_de_bacteries = 500;
+const int nombre_de_bacteries = 50;
 
 int main()
 {
@@ -226,7 +220,7 @@ int main()
 		bac[i].enregistrement();
 	}
 	double k = 0;
-	while(k < 5000)
+	while(k < 3000)
 	{
 		int min = minimum(tps , nombre_de_bacteries);
 		long double value = tps[min];
