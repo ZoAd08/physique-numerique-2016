@@ -59,8 +59,8 @@ class bacteria
 	int iterateur;
 	double vitesse = 20; //micronse/seconde
 	double pas_normal = 20; //microns
-	double sens1 = 3; //3secondes
-	double sens2 = 1; //secondes
+	double sens1 = 5; //3secondes
+	double sens2 = 2; //secondes
 	double radius = 1000;
 
 	public:
@@ -131,24 +131,25 @@ class bacteria
 
 		//fonction de réponse de la bactérie en fonction de la différence de concentration entre deux instants
 		
-		std::ranlux24_base generator;
+		//std::ranlux24_base generator;
 		if(concentration < 0)
 		{
-			std::exponential_distribution<double> distribution(1/(2*pas_normal));
-			pas = distribution(generator);
+			//std::exponential_distribution<double> distribution(1/(2*pas_normal));
+			//pas = distribution(generator);
+			pas = 5*pas_normal;
 			
 			
 		}
 		else if(concentration > 0)
 		{
-			std::exponential_distribution<double> distribution(1/(0.5*pas_normal));
-			pas = distribution(generator);
-			
+			//std::exponential_distribution<double> distribution(1/(0.5*pas_normal));
+			//pas = distribution(generator);
+			pas = 0.5*pas_normal;
 
 		}
 		else if(concentration == 0)
 		{
-			pas = 0*pas_normal;
+			pas = pas_normal;
 		}
 		
 		if(iterateur == 1)
@@ -166,12 +167,12 @@ class bacteria
 		y_position += pas*sin(theta);
 		temps = pas/vitesse;
 		
-		if((pow(x_position,2)+pow(y_position,2)) > pow(10000,2)) //condition aux limites réflectives
+		if((pow(x_position,2)+pow(y_position,2)) > pow(1000,2)) //condition aux limites réflectives
 		{
 			x_position = radius*cos(theta);
 			y_position = radius*sin(theta);
-			theta_past[iterateur] = theta + M_PI;
-			temps = (1./vitesse)*sqrt(pow(x_position-x_past[iterateur -1],2) + pow(y_position-y_past[iterateur -1],2));
+			theta_past[iterateur] = theta;
+			temps = (1./vitesse)*(sqrt(pow(x_position-x_past[iterateur -1],2) + pow(y_position-y_past[iterateur -1],2)));
 		}
 		temps_past[iterateur] = temps_past[iterateur-1] + temps;
 		x_past[iterateur] = x_position;
@@ -205,7 +206,7 @@ class bacteria
 };
 
 
-const int nombre_de_bacteries = 1000;
+const int nombre_de_bacteries = 50;
 
 int main()
 {
