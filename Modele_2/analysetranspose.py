@@ -43,8 +43,8 @@ for i in range(marcheur):
 	if runvstumble[1,i] == 0 :
 		plt.plot(x[-1,i],y[-1,i],'r.')
 	if runvstumble[1,i] == 1 :
-		plt.plot(x[-1,i],y[-1,i],'g.')
-	plt.plot(x[0,i],y[0,i],'b.')
+		plt.plot(x[-1,i],y[-1,i],'m.')
+	plt.plot(x[0,i],y[0,i],'y.')
 
 circle1 = plt.Circle((0, 0), radius, color='b',fill=False)
 ax = plt.gca()
@@ -52,9 +52,9 @@ ax.add_artist(circle1)
 plt.ylim((-radius,radius))
 plt.xlim((-radius,radius))
 plt.axis('equal')
-Init = mlines.Line2D([], [], color='blue', marker=".",markersize=15, label='Position initiale')
+Init = mlines.Line2D([], [], color='yellow', marker=".",markersize=15, label='Position initiale')
 Fin = mlines.Line2D([], [], color='red', marker=".",markersize=15, label='Position finale tumble')
-Fin2 = mlines.Line2D([], [], color='green', marker=".",markersize=15, label='Position finale run')
+Fin2 = mlines.Line2D([], [], color='magenta', marker=".",markersize=15, label='Position finale run')
 plt.legend(handles=[Init,Fin,Fin2])
 plt.title(legend_nbmarcheurs + legend_nbpas)
 plt.show()

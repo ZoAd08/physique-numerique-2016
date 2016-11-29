@@ -59,8 +59,8 @@ class bacteria
 	int iterateur;
 	double vitesse = 20; //micronse/seconde
 	double pas_normal = 20; //microns
-	double sens1 = 5; //3secondes
-	double sens2 = 2; //secondes
+	double sens1 = 1; //3secondes
+	double sens2 = 0; //secondes
 	double radius = 1000;
 
 	public:
@@ -143,7 +143,7 @@ avant le prochain tumble de la bactérie.*/
 		{
 			//std::exponential_distribution<double> distribution(1/(2*pas_normal));
 			//pas = distribution(generator);
-			pas = 5*pas_normal;
+			pas = 10*pas_normal;
 
 
 		}
@@ -171,7 +171,7 @@ avant le prochain tumble de la bactérie.*/
 			theta = - phi + theta_past[iterateur-1]; //angle de projection en coordonnées polaires.
 		}
 
-		if((pow(x_position+pas*cos(theta),2)+pow(y_position+pas*sin(theta),2)) < pow(1000,2))
+		if((pow(x_position+pas*cos(theta),2)+pow(y_position+pas*sin(theta),2)) < pow(radius,2))
 		{
 			x_position += pas*cos(theta);
 			y_position += pas*sin(theta);
@@ -179,7 +179,7 @@ avant le prochain tumble de la bactérie.*/
 			theta_past[iterateur] = theta;
 		}
 
-		else if((pow(x_position,2)+pow(y_position,2)) >= pow(1000,2)) //condition aux limites, si la bactérie va sortir du cercle au prochain pas elle ne bouge pas (AMELIORER)
+		else if((pow(x_position,2)+pow(y_position,2)) >= pow(radius,2)) //condition aux limites, si la bactérie va sortir du cercle au prochain pas elle ne bouge pas (AMELIORER)
 		{
 			x_position -= pas*cos(theta);
 			y_position -= pas*sin(theta);
@@ -218,7 +218,7 @@ avant le prochain tumble de la bactérie.*/
 };
 
 
-const int nombre_de_bacteries = 500;
+const int nombre_de_bacteries = 1000;
 
 int main()
 {
@@ -232,7 +232,7 @@ int main()
 		bac[i].enregistrement();
 	}
 	double k = 0;
-	while(k <= 5000)
+	while(k <= 7000)
 	{
 		int min = minimum(tps , nombre_de_bacteries);
 		long double value = tps[min];
