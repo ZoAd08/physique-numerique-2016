@@ -67,11 +67,10 @@ class bacteria
 	//constructeur
 	bacteria()
 	{
-    		temps = 0;
+    temps = 0;
 		temps_past[0] = 0.;
 		theta_past[0] = 0;
 		iterateur = 1;
-		double radius = 1000;
 		int compteur = 0;
 		while(compteur < 1 ) //distribution au hasard dans un disque de rayon = radius
 		{
@@ -94,16 +93,21 @@ class bacteria
 
 /*Permet de déterminer l'évolution dans le temps d'une bactérie. La simulation commence avec l'apparition aléatoire de la bactérie dans une disque.
 Elle effectue d'abord une marche aléatoire qui suit une distribution d'angle en accord avec les données expérimentales relevées dans la littérature, en négligeant l'effet
-du gradient de concentration de nutriment de 9 pas. Après 10 pas, la bactérie effectue une marche aléatoire biaisée, elle compare la valeur du gradient de concentration 
-entre deux instants antérieurs et allonge(resp réduit) son run si elle se déplace vers une zone plus (resp moins) concentrée. La fonction renvoie le temps qu'il reste 
+du gradient de concentration de nutriment de 9 pas. Après 10 pas, la bactérie effectue une marche aléatoire biaisée, elle compare la valeur du gradient de concentration
+entre deux instants antérieurs et allonge(resp réduit) son run si elle se déplace vers une zone plus (resp moins) concentrée. La fonction renvoie le temps qu'il reste
 avant le prochain tumble de la bactérie.*/
 	double evolution()
 	{
 		double a = temps_past[iterateur - 1] - sens1;
 		double b = temps_past[iterateur - 1] - sens2;
-		double x1,x2,y1,y2,pas,theta;
+		double x1 = 0;
+		double x2 = 0;
+		double y1 = 0;
+		double y2 = 0;
+		double pas = 0;
+		double theta = 0;
 
-		if (iterateur <= 10) 
+		if (iterateur <= 10)
 		{
 			x1 = 0;
 			y1 = 0;
@@ -111,19 +115,19 @@ avant le prochain tumble de la bactérie.*/
 			y2 = 0;
 		}
 
-		else if(iterateur > 10) 
+		else if(iterateur > 10)
 		{
 			for(int i = iterateur-1; i >= 0 ; --i) //A VERIFIER
 			{
 				if(a <= temps_past[i])
 				{
-					x1 = x_past[i-1]+(sqrt(pow(x_past[i]-x_past[i-1],2) + pow(y_past[i]-y_past[i-1],2))- ((temps_past[i]-a)*(vitesse)))*cos(theta_past[i]);
-					y1 = y_past[i-1]+(sqrt(pow(x_past[i]-x_past[i-1],2) + pow(y_past[i]-y_past[i-1],2))- ((temps_past[i]-a)*(vitesse)))*sin(theta_past[i]);
+					x1 = x_past[i-1]+(sqrt(pow(x_past[i]-x_past[i-1],2) + pow(y_past[i]-y_past[i-1],2))*cos(theta_past[i])- ((temps_past[i]-a)*(vitesse)))*cos(theta_past[i]);
+					y1 = y_past[i-1]+(sqrt(pow(x_past[i]-x_past[i-1],2) + pow(y_past[i]-y_past[i-1],2))*sin(theta_past[i])- ((temps_past[i]-a)*(vitesse)))*sin(theta_past[i]);
 				}
 				if(b <= temps_past[i])
 				{
-					x2 = x_past[i-1]+(sqrt(pow(x_past[i]-x_past[i-1],2) + pow(y_past[i]-y_past[i-1],2))- ((temps_past[i]-b)*(vitesse)))*cos(theta_past[i]);
-					y2 = y_past[i-1]+(sqrt(pow(x_past[i]-x_past[i-1],2) + pow(y_past[i]-y_past[i-1],2))- ((temps_past[i]-b)*(vitesse)))*sin(theta_past[i]);
+					x2 = x_past[i-1]+(sqrt(pow(x_past[i]-x_past[i-1],2) + pow(y_past[i]-y_past[i-1],2))*cos(theta_past[i])- ((temps_past[i]-b)*(vitesse)))*cos(theta_past[i]);
+					y2 = y_past[i-1]+(sqrt(pow(x_past[i]-x_past[i-1],2) + pow(y_past[i]-y_past[i-1],2))*sin(theta_past[i])- ((temps_past[i]-b)*(vitesse)))*sin(theta_past[i]);
 				}
 			}
 		}
@@ -133,15 +137,15 @@ avant le prochain tumble de la bactérie.*/
 
 
 		//fonction de réponse de la bactérie en fonction de la différence de concentration entre deux instants
-		
+
 		//std::ranlux24_base generator;
 		if(concentration < 0)
 		{
 			//std::exponential_distribution<double> distribution(1/(2*pas_normal));
 			//pas = distribution(generator);
 			pas = 5*pas_normal;
-			
-			
+
+
 		}
 		else if(concentration > 0)
 		{
@@ -154,7 +158,7 @@ avant le prochain tumble de la bactérie.*/
 		{
 			pas = pas_normal;
 		}
-		
+
 
 		if(iterateur == 1)
 		{
@@ -166,7 +170,7 @@ avant le prochain tumble de la bactérie.*/
 			double phi = 2.0*asin(((double)rand()/(double)RAND_MAX)*(2)-1); //distribution de l'angle entre deux directions de run après un tumble
 			theta = - phi + theta_past[iterateur-1]; //angle de projection en coordonnées polaires.
 		}
-		
+
 		if((pow(x_position+pas*cos(theta),2)+pow(y_position+pas*sin(theta),2)) < pow(1000,2))
 		{
 			x_position += pas*cos(theta);
@@ -175,10 +179,12 @@ avant le prochain tumble de la bactérie.*/
 			theta_past[iterateur] = theta;
 		}
 
-		if((pow(x_position,2)+pow(y_position,2)) >= pow(1000,2)) //condition aux limites, si la bactérie va sortir du cercle au prochain pas elle ne bouge pas (AMELIORER)
+		else if((pow(x_position,2)+pow(y_position,2)) >= pow(1000,2)) //condition aux limites, si la bactérie va sortir du cercle au prochain pas elle ne bouge pas (AMELIORER)
 		{
-			theta_past[iterateur] = theta;
-			temps = 0;
+			x_position -= pas*cos(theta);
+			y_position -= pas*sin(theta);
+			temps = pas/vitesse;
+			theta_past[iterateur] = M_PI + theta;
 		}
 		temps_past[iterateur] = temps_past[iterateur-1] + temps;
 		x_past[iterateur] = x_position;
@@ -201,13 +207,13 @@ avant le prochain tumble de la bactérie.*/
 		{
 			printf ( "%.3f %.20f \t %.20u \n", x_position,y_position,0);
 		}
-		
+
 		else if(temps > 0) //A VERIFIER
 		{
-			x_final = x_past[iterateur-1]+(vitesse*(k-temps_past[iterateur-1]))*cos(theta_past[iterateur]) ;
-			y_final = y_past[iterateur-1]+(vitesse*(k-temps_past[iterateur-1]))*sin(theta_past[iterateur]) ;
-			printf ( "%.3f %.20f \t %.20u \n", x_final,y_final,1);
-		}	
+			x_final = x_past[iterateur-2]+(vitesse*(k-(temps_past[iterateur-1]-temps))*cos(theta_past[iterateur-1])) ;
+			y_final = y_past[iterateur-2]+(vitesse*(k-(temps_past[iterateur-2]))*sin(theta_past[iterateur-1])) ;
+			printf ( "%.3f %.20f \t %.20u \n", x_position,y_position,1);
+		}
 	}
 };
 
@@ -226,7 +232,7 @@ int main()
 		bac[i].enregistrement();
 	}
 	double k = 0;
-	while(k < 5000)
+	while(k <= 5000)
 	{
 		int min = minimum(tps , nombre_de_bacteries);
 		long double value = tps[min];
@@ -249,7 +255,7 @@ int main()
 		value = 0;
 	}
 
-///*	
+///*
 for(int i = 0; i < nombre_de_bacteries; ++i)
 	{
 		bac[i].position_finale(k);
