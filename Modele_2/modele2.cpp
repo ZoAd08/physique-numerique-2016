@@ -59,7 +59,7 @@ class bacteria
 	int iterateur;
 	double vitesse = 20; //micronse/seconde
 	double pas_normal = 20; //microns
-	double sens1 = 1; //3secondes
+	double sens1 = 5; //3secondes
 	double sens2 = 0; //secondes
 	double radius = 1000;
 
@@ -133,7 +133,7 @@ avant le prochain tumble de la bactérie.*/
 		}
 
 
-		double concentration = 1000*exp(-0.00005*(pow(x1,2) + pow(y1,2))) - 1000*exp(-0.00005*(pow(x2,2) + pow(y2,2)));
+		double concentration = 1000*exp(-0.0005*(pow(x1,2) + pow(y1,2))) - 1000*exp(-0.0005*(pow(x2,2) + pow(y2,2)));
 
 
 		//fonction de réponse de la bactérie en fonction de la différence de concentration entre deux instants
@@ -141,9 +141,9 @@ avant le prochain tumble de la bactérie.*/
 		//std::ranlux24_base generator;
 		if(concentration < 0)
 		{
-			//std::exponential_distribution<double> distribution(1/(2*pas_normal));
+			//std::exponential_distribution<double> distribution(1/(5*pas_normal));
 			//pas = distribution(generator);
-			pas = 10*pas_normal;
+			pas = 0.6*pas_normal + pas_normal;
 
 
 		}
@@ -151,7 +151,7 @@ avant le prochain tumble de la bactérie.*/
 		{
 			//std::exponential_distribution<double> distribution(1/(0.5*pas_normal));
 			//pas = distribution(generator);
-			pas = 0.5*pas_normal;
+			pas = pas_normal;
 
 		}
 		else if(concentration == 0)
@@ -218,7 +218,7 @@ avant le prochain tumble de la bactérie.*/
 };
 
 
-const int nombre_de_bacteries = 1000;
+const int nombre_de_bacteries = 500;
 
 int main()
 {
