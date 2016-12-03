@@ -132,18 +132,22 @@ avant le prochain tumble de la bactérie.*/
 			}
 		}
 
-
-		double concentration = 1000*exp(-0.0005*(pow(x1,2) + pow(y1,2))) - 1000*exp(-0.0005*(pow(x2,2) + pow(y2,2)));
+		float caracteristique_gradient = 500;
+		float concentration = exp(-pow(caracteristique_gradient,-2)*(pow(x1,2) + pow(y1,2))) - exp(-pow(caracteristique_gradient,-2)*(pow(x2,2) + pow(y2,2)));
 
 
 		//fonction de réponse de la bactérie en fonction de la différence de concentration entre deux instants
 
 		//std::ranlux24_base generator;
+		//std::cout<<concentration<<std::endl;
+		
+		float gain = 2;
+
 		if(concentration < 0)
 		{
 			//std::exponential_distribution<double> distribution(1/(5*pas_normal));
 			//pas = distribution(generator);
-			pas = 0.6*pas_normal + pas_normal;
+			pas = pas_normal*(1. + concentration*gain);
 
 
 		}
@@ -232,7 +236,7 @@ int main()
 		bac[i].enregistrement();
 	}
 	double k = 0;
-	while(k <= 7000)
+	while(k <= 3000)
 	{
 		int min = minimum(tps , nombre_de_bacteries);
 		long double value = tps[min];
