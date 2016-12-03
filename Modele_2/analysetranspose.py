@@ -20,9 +20,11 @@ import time
 start_time = time.time()
 
 config = np.loadtxt("config.txt")
-marcheur = int(config[0])
-temps = config[1]
-radius = 1000.
+marcheur = int(config[0,0])
+temps = config[0,1]
+radius = config[1,0]
+gain = "Gain : " + str(config[1,1]) + "\n"
+sens = "Comparaison entre " + str(config[2,0]) + " seconde et " + str(config[2,1]) + " seconde" + "\n"
 data = np.loadtxt("marcheur.txt")
 x=np.zeros((2,marcheur))
 y=np.zeros((2,marcheur))
@@ -37,7 +39,7 @@ runvstumble[1,:]=data[len(data[:,0])-marcheur:len(data[:,0]),2].transpose()
 
 
 legend_nbmarcheurs = "Nombre de bacteries : " + str(marcheur) + "\n"
-legend_nbpas = "Temps (secondes) : " + str(temps)
+legend_nbpas = "Temps (secondes) : " + str(temps) + "\n"
 plt.figure(3)
 for i in range(marcheur):
 	if runvstumble[1,i] == 0 :
@@ -56,6 +58,6 @@ Init = mlines.Line2D([], [], color='yellow', marker=".",markersize=15, label='Po
 Fin = mlines.Line2D([], [], color='red', marker=".",markersize=15, label='Position finale tumble')
 Fin2 = mlines.Line2D([], [], color='magenta', marker=".",markersize=15, label='Position finale run')
 plt.legend(handles=[Init,Fin,Fin2])
-plt.title(legend_nbmarcheurs + legend_nbpas)
+plt.title(legend_nbmarcheurs + legend_nbpas + gain + sens)
 plt.show()
 print "--- %s seconds ---" % (time.time() - start_time)

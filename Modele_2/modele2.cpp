@@ -59,10 +59,12 @@ class bacteria
 	int iterateur;
 	double vitesse = 20; //micronse/seconde
 	double pas_normal = 20; //microns
-	double sens1 = 5; //3secondes
+	double sens1 = 1; //3secondes
 	double sens2 = 0; //secondes
-	double radius = 1000;
-
+	double radius = 500;
+	double gain = 10;
+	double pas_moyen = 0;
+	
 	public:
 	//constructeur
 	bacteria()
@@ -117,7 +119,7 @@ avant le prochain tumble de la bactérie.*/
 
 		else if(iterateur > 10)
 		{
-			for(int i = iterateur-1; i >= 0 ; --i) //A VERIFIER
+			for(int i = iterateur-1; i >= 0 ; --i)
 			{
 				if(a <= temps_past[i])
 				{
@@ -132,8 +134,8 @@ avant le prochain tumble de la bactérie.*/
 			}
 		}
 
-		float caracteristique_gradient = 500;
-		float concentration = exp(-pow(caracteristique_gradient,-2)*(pow(x1,2) + pow(y1,2))) - exp(-pow(caracteristique_gradient,-2)*(pow(x2,2) + pow(y2,2)));
+		double caracteristique_gradient = 200;
+		double concentration = 100*(exp(-pow(caracteristique_gradient,-2)*(pow(x1,2) + pow(y1,2))) - exp(-pow(caracteristique_gradient,-2)*(pow(x2,2) + pow(y2,2))));
 
 
 		//fonction de réponse de la bactérie en fonction de la différence de concentration entre deux instants
@@ -141,28 +143,43 @@ avant le prochain tumble de la bactérie.*/
 		//std::ranlux24_base generator;
 		//std::cout<<concentration<<std::endl;
 		
-		float gain = 2;
+		
 
 		if(concentration < 0)
 		{
 			//std::exponential_distribution<double> distribution(1/(5*pas_normal));
 			//pas = distribution(generator);
-			pas = pas_normal*(1. + concentration*gain);
-
+			if(-concentration*gain < 19.)
+			{
+				pas = pas_normal*(1. - concentration*gain);	
+			}
+			
+			else
+			{
+				pas = pas_normal*20.;
+			}
+			
 
 		}
 		else if(concentration > 0)
 		{
 			//std::exponential_distribution<double> distribution(1/(0.5*pas_normal));
 			//pas = distribution(generator);
-			pas = pas_normal;
-
+			if(concentration*gain < 1)
+			{
+				pas = pas_normal*(1.1 - concentration*gain);
+			}
+			else
+			{
+				pas = pas_normal*0.5;
+			}
 		}
+
 		else if(concentration == 0)
 		{
 			pas = pas_normal;
 		}
-
+//std::cout <<pas<< std::endl;
 
 		if(iterateur == 1)
 		{
@@ -190,9 +207,11 @@ avant le prochain tumble de la bactérie.*/
 			temps = pas/vitesse;
 			theta_past[iterateur] = M_PI + theta;
 		}
+
 		temps_past[iterateur] = temps_past[iterateur-1] + temps;
 		x_past[iterateur] = x_position;
 		y_past[iterateur] = y_position;
+		pas_moyen += pas;
 		iterateur += 1;
 		return temps;
 	}
@@ -206,23 +225,31 @@ avant le prochain tumble de la bactérie.*/
 //enregistrement de la position finale des bactéries en discernant les bactéries en run (1), et les bactéries en tumble (0)
 	void position_finale(double k)
 	{
-		double x_final, y_final;
 		if(temps == 0)
 		{
 			printf ( "%.3f %.20f \t %.20u \n", x_position,y_position,0);
 		}
 
-		else if(temps > 0) //A VERIFIER
+		if(temps > 0)
 		{
+			double x_final = 0;
+			double y_final = 0;
 			x_final = x_past[iterateur-2]+(vitesse*(k-(temps_past[iterateur-1]-temps))*cos(theta_past[iterateur-1])) ;
 			y_final = y_past[iterateur-2]+(vitesse*(k-(temps_past[iterateur-2]))*sin(theta_past[iterateur-1])) ;
 			printf ( "%.3f %.20f \t %.20u \n", x_position,y_position,1);
 		}
 	}
+
+//affiche les informations d'une bactérie
+	void information()
+	{
+		pas_moyen = (pas_moyen)/(iterateur-1.);
+		printf ( "%.3f %.20f \n %.3f %.20f \n %.3f %.20f  ", radius, gain, sens1, sens2, pas_moyen,0.0);
+	}
 };
 
 
-const int nombre_de_bacteries = 500;
+const int nombre_de_bacteries = 1000;
 
 int main()
 {
@@ -267,5 +294,6 @@ for(int i = 0; i < nombre_de_bacteries; ++i)
 //*/
 	freopen( "config.txt", "w", stdout );
 	printf ( "%.3d %.20f \n", nombre_de_bacteries , k);
+	bac[0].information();
   return 0;
 }
