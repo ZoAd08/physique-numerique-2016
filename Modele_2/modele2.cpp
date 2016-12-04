@@ -62,7 +62,7 @@ class bacteria
 	double sens1 = 1; //3secondes
 	double sens2 = 0; //secondes
 	double radius = 500;
-	double gain = 10;
+	double gain = 100;
 	double pas_moyen = 0;
 	
 	public:
@@ -135,7 +135,7 @@ avant le prochain tumble de la bactérie.*/
 		}
 
 		double caracteristique_gradient = 200;
-		double concentration = 100*(exp(-pow(caracteristique_gradient,-2)*(pow(x1,2) + pow(y1,2))) - exp(-pow(caracteristique_gradient,-2)*(pow(x2,2) + pow(y2,2))));
+		double concentration = 10*(exp(-pow(caracteristique_gradient,-2)*(pow(x1,2) + pow(y1,2))) - exp(-pow(caracteristique_gradient,-2)*(pow(x2,2) + pow(y2,2))));
 
 
 		//fonction de réponse de la bactérie en fonction de la différence de concentration entre deux instants
@@ -149,21 +149,21 @@ avant le prochain tumble de la bactérie.*/
 		{
 			//std::exponential_distribution<double> distribution(1/(5*pas_normal));
 			//pas = distribution(generator);
-			if(-concentration*gain < 19.)
+			if(-concentration*gain < 10.)
 			{
 				pas = pas_normal*(1. - concentration*gain);	
 			}
 			
 			else
 			{
-				pas = pas_normal*20.;
+				pas = pas_normal*11.;
 			}
 			
 
 		}
 		else if(concentration > 0)
 		{
-			//std::exponential_distribution<double> distribution(1/(0.5*pas_normal));
+			//std::exponential_distribution<double> distribution(1/(pas_normal));
 			//pas = distribution(generator);
 			if(concentration*gain < 1)
 			{
@@ -171,7 +171,7 @@ avant le prochain tumble de la bactérie.*/
 			}
 			else
 			{
-				pas = pas_normal*0.5;
+				pas = pas_normal*0.1;
 			}
 		}
 
@@ -179,7 +179,7 @@ avant le prochain tumble de la bactérie.*/
 		{
 			pas = pas_normal;
 		}
-//std::cout <<pas<< std::endl;
+
 
 		if(iterateur == 1)
 		{
@@ -253,6 +253,7 @@ const int nombre_de_bacteries = 1000;
 
 int main()
 {
+	double type = 1; // 0 = exporte toutes les positions, =1 exporte la position initiale et finale
 	srand (time(NULL));
 	freopen( "marcheur.txt", "w", stdout );
 	bacteria bac[nombre_de_bacteries];
@@ -263,7 +264,7 @@ int main()
 		bac[i].enregistrement();
 	}
 	double k = 0;
-	while(k <= 3000)
+	while(k <= 1200)
 	{
 		int min = minimum(tps , nombre_de_bacteries);
 		long double value = tps[min];
@@ -273,12 +274,14 @@ int main()
 		}
 		tps[min] += bac[min].evolution();
 
-/*
-		for (int i = 0; i < nombre_de_bacteries; ++i) //permet d'enregistrer toutes les trajectoires (lent)
+		if (type == 0)
 		{
-			bac[i].enregistrement();
+		for (int i = 0; i < nombre_de_bacteries; ++i) //permet d'enregistrer toutes les trajectoires (lent)
+				{
+					bac[i].enregistrement();
+				}
 		}
-*/
+
 
 		k += value;
 
@@ -286,12 +289,14 @@ int main()
 		value = 0;
 	}
 
-///*
-for(int i = 0; i < nombre_de_bacteries; ++i)
+	if (type == 1)
 	{
-		bac[i].position_finale(k);
+		for(int i = 0; i < nombre_de_bacteries; ++i)
+			{
+				bac[i].position_finale(k);
+			}
 	}
-//*/
+
 	freopen( "config.txt", "w", stdout );
 	printf ( "%.3d %.20f \n", nombre_de_bacteries , k);
 	bac[0].information();
