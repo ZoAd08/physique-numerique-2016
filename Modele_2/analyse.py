@@ -16,9 +16,12 @@ import matplotlib.pyplot as plt
 import matplotlib.lines as mlines
 
 config = np.loadtxt("config.txt")
-marcheur = int(config[0])
-temps = config[1]
-radius = 1000.
+marcheur = int(config[0,0])
+temps = config[0,1]
+radius = config[1,0]
+gain = "Gain : " + str(config[1,1]) + "\n"
+sens = "Comparaison entre " + str(config[2,0]) + " seconde et " + str(config[2,1]) + " seconde" + "\n"
+data = np.loadtxt("marcheur.txt")
 data = np.loadtxt("marcheur.txt")
 x=np.zeros(((int(len(data[:,0])/marcheur)),marcheur))
 y=np.zeros(((int(len(data[:,0])/marcheur)),marcheur))

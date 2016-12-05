@@ -59,10 +59,10 @@ class bacteria
 	int iterateur;
 	double vitesse = 20; //micronse/seconde
 	double pas_normal = 20; //microns
-	double sens1 = 1; //3secondes
+	double sens1 = 3; //3secondes
 	double sens2 = 0; //secondes
-	double radius = 500;
-	double gain = 100;
+	double radius = 1500;
+	double gain = 20;
 	double pas_moyen = 0;
 	
 	public:
@@ -134,50 +134,46 @@ avant le prochain tumble de la bactérie.*/
 			}
 		}
 
-		double caracteristique_gradient = 200;
-		double concentration = 10*(exp(-pow(caracteristique_gradient,-2)*(pow(x1,2) + pow(y1,2))) - exp(-pow(caracteristique_gradient,-2)*(pow(x2,2) + pow(y2,2))));
+		double caracteristique_gradient = 50;
+		double concentration = 5000*(exp(-pow(caracteristique_gradient,-2)*(pow(x1,2) + pow(y1,2))) - exp(-pow(caracteristique_gradient,-2)*(pow(x2,2) + pow(y2,2))));
 
 
 		//fonction de réponse de la bactérie en fonction de la différence de concentration entre deux instants
-
-		//std::ranlux24_base generator;
-		//std::cout<<concentration<<std::endl;
+		std::mt19937 generator(time(NULL));
+		std::exponential_distribution<double> distribution(0.05);
+		double dist_pas = distribution(generator);
 		
-		
-
 		if(concentration < 0)
 		{
-			//std::exponential_distribution<double> distribution(1/(5*pas_normal));
-			//pas = distribution(generator);
 			if(-concentration*gain < 10.)
 			{
-				pas = pas_normal*(1. - concentration*gain);	
+				pas = dist_pas*(1. - concentration*gain);	
 			}
 			
 			else
 			{
-				pas = pas_normal*11.;
+				pas = dist_pas*11.;
 			}
-			
+
 
 		}
 		else if(concentration > 0)
 		{
-			//std::exponential_distribution<double> distribution(1/(pas_normal));
-			//pas = distribution(generator);
-			if(concentration*gain < 1)
+			if(concentration*gain < 0)
 			{
-				pas = pas_normal*(1.1 - concentration*gain);
+				pas = dist_pas*(1.0 - concentration*gain);
 			}
 			else
 			{
-				pas = pas_normal*0.1;
+				pas = dist_pas*0.2;
 			}
+
+
 		}
 
 		else if(concentration == 0)
 		{
-			pas = pas_normal;
+			pas = dist_pas;
 		}
 
 
@@ -249,11 +245,15 @@ avant le prochain tumble de la bactérie.*/
 };
 
 
-const int nombre_de_bacteries = 1000;
+const int nombre_de_bacteries = 3000;
 
 int main()
 {
+
+
 	double type = 1; // 0 = exporte toutes les positions, =1 exporte la position initiale et finale
+	
+
 	srand (time(NULL));
 	freopen( "marcheur.txt", "w", stdout );
 	bacteria bac[nombre_de_bacteries];
