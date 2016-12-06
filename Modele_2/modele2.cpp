@@ -245,7 +245,7 @@ avant le prochain tumble de la bactérie.*/
 };
 
 
-const int nombre_de_bacteries = 1000;
+const int nombre_de_bacteries = 10;
 
 int main()
 {
@@ -264,6 +264,7 @@ int main()
 		bac[i].enregistrement();
 	}
 	double k = 0;
+	double z = 0;
 	while(k <= 1200)
 	{
 		int min = minimum(tps , nombre_de_bacteries);
@@ -283,8 +284,9 @@ int main()
 		}
 
 		k += value;
+		z += 1;
 
-		if (k == 500 or k == 1000)
+		if (z == 100 or z == 2000)
 		{
 			for(int i = 0; i < nombre_de_bacteries; ++i)
 				{
