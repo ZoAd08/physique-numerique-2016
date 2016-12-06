@@ -245,7 +245,7 @@ avant le prochain tumble de la bactérie.*/
 };
 
 
-const int nombre_de_bacteries = 3000;
+const int nombre_de_bacteries = 1000;
 
 int main()
 {
@@ -276,14 +276,22 @@ int main()
 
 		if (type == 0)
 		{
-		for (int i = 0; i < nombre_de_bacteries; ++i) //permet d'enregistrer toutes les trajectoires (lent)
+			for (int i = 0; i < nombre_de_bacteries; ++i) //permet d'enregistrer toutes les trajectoires (lent)
 				{
 					bac[i].enregistrement();
 				}
 		}
 
-
 		k += value;
+
+		if (k == 500 or k == 1000)
+		{
+			for(int i = 0; i < nombre_de_bacteries; ++i)
+				{
+					bac[i].position_finale(k);
+				}
+		}
+	
 
 		min = 0;
 		value = 0;
