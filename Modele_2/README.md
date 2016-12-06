@@ -48,7 +48,7 @@ Paramètres de la simulation.
 	* Nombre de bactéries.
 	* Durée de la simulation.
 	* Données que la simulation enregistre dans le fichier marcheur.txt
-
+	* Nombre de coordonnées à exporter.
 
 
 
@@ -64,7 +64,7 @@ Utilisation de la simulation.
 
 * Tracer la densité de bactéries en fonction du rayon.
 
-	** Régler la variable "type" sur 1 dans le fichier modele2.cpp puis exécuter le fichier, visualiser les données avec le fichier densiteradiale.cpp
+	** Régler la variable "type" sur 1 et le nombre de réalisation à prendre en compte pour faire la moyenne dans le fichier modele2.cpp puis exécuter le fichier, visualiser les données avec le fichier densiteradiale.cpp
 
 * Pour chaque simulation, le programme renvoie un fichier de configuration.
 

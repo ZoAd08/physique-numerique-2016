@@ -20,7 +20,7 @@ temps = config[0,1]
 radius = config[1,0]
 gain = "Gain : " + str(config[1,1]) + "\n"
 sens = "Comparaison entre " + str(config[2,0]) + " seconde et " + str(config[2,1]) + " seconde" + "\n"
-pas=radius / 100.
+pas=radius / 50.
 
 data = np.loadtxt("marcheur.txt")
 x=np.zeros(marcheur)

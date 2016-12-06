@@ -245,7 +245,7 @@ avant le prochain tumble de la bactérie.*/
 };
 
 
-const int nombre_de_bacteries = 10;
+const int nombre_de_bacteries = 1000;
 
 int main()
 {
@@ -265,7 +265,7 @@ int main()
 	}
 	double k = 0;
 	double z = 0;
-	while(k <= 1200)
+	while(k <= 3000)
 	{
 		int min = minimum(tps , nombre_de_bacteries);
 		long double value = tps[min];
@@ -284,14 +284,16 @@ int main()
 		}
 
 		k += value;
-		z += 1;
-
-		if (z == 100 or z == 2000)
+		if (k > 2500)
 		{
-			for(int i = 0; i < nombre_de_bacteries; ++i)
-				{
-					bac[i].position_finale(k);
-				}
+			while(z < 100) //nombre de ralisation pour faire une moyenne
+			{
+				for(int i = 0; i < nombre_de_bacteries; ++i)
+					{
+						bac[i].position_finale(k);
+					}
+				z += 1;
+			}
 		}
 	
 
