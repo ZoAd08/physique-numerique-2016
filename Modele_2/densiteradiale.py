@@ -13,15 +13,21 @@ import scipy.spatial as sp
 import matplotlib.pyplot as plt
 from numpy import transpose
 from scipy.spatial import KDTree
+from scipy.optimize import curve_fit
 
+
+#lecture du fichier de config qui defini automatiquement les parametres utilises pour produire les donnees
 config = np.loadtxt("config.txt")
 marcheur = int(config[0,0])
 temps = config[0,1]
 radius = config[1,0]
 gain = "Gain : " + str(config[1,1]) + "\n"
 sens = "Comparaison entre " + str(config[2,0]) + " seconde et " + str(config[2,1]) + " seconde" + "\n"
-pas=radius / 50.
+pas=radius / 40.
 
+
+
+#lecture des donnees
 data = np.loadtxt("marcheur.txt")
 x=np.zeros(marcheur)
 y=np.zeros(marcheur)
@@ -29,6 +35,9 @@ points=np.zeros((marcheur,2))
 densite=np.zeros(((len(data[:,0])/marcheur)+2,int(radius/pas)))
 R = []
 
+
+
+#comptage du nombre de bacteries par couronne
 for j in range(1,(len(data[:,0])/marcheur)-1):
 
     x=data[marcheur*j:(marcheur-1)*(j+1),0].transpose()
@@ -51,7 +60,21 @@ for k in range(int(radius/pas)):
     densite[-1,k]=np.std(densite[0:-3,k])
 
 
-plt.figure(4)
+
+
+#fit de la courbe
+def func(x, a, b, c):
+    return a*b * (1+x**2) + c
+
+popt, pcov = curve_fit(func, R, densite[-2,:])
+xfine = np.linspace(0., radius, 100)
+
+
+
+
+#trace de la courbe
+plt.figure()
+plt.plot(xfine, func(xfine, popt[0], popt[1],popt[2]), 'r-')
 plt.errorbar(R, densite[-2,:] , xerr = pas, yerr = densite[-1,:], fmt = 'r.', label="Densite surfacique de bacteries")
 plt.xlabel("Rayon")
 plt.legend()

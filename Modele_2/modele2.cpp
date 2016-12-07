@@ -245,7 +245,7 @@ avant le prochain tumble de la bactérie.*/
 };
 
 
-const int nombre_de_bacteries = 1000;
+const int nombre_de_bacteries = 2000;
 
 int main()
 {
@@ -284,9 +284,10 @@ int main()
 		}
 
 		k += value;
-		if (k > 2500)
+		if (k > 2000)
 		{
-			while(z < 100) //nombre de ralisation pour faire une moyenne
+			int al = rand()%100;
+			while(z < 200 and al ==1) //nombre de realisation pour faire une moyenne
 			{
 				for(int i = 0; i < nombre_de_bacteries; ++i)
 					{
