@@ -61,7 +61,8 @@ for k in range(int(radius/pas)):
     densite[-2,k]=np.mean(densite[0:-3,k])
     densite[-1,k]=np.std(densite[0:-3,k])
 
-
+name = str(temps) + '_' + str(marcheur)
+np.savetxt('name.txt', zip(R , densite[-2,:] , densite[-1,:]))
 
 #trace de la courbe
 plt.figure()
