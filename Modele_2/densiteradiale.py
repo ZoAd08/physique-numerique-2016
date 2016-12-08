@@ -14,6 +14,8 @@ import matplotlib.pyplot as plt
 from numpy import transpose
 from scipy.spatial import KDTree
 from scipy.optimize import curve_fit
+import scipy.special as sp
+
 
 
 #lecture du fichier de config qui defini automatiquement les parametres utilises pour produire les donnees
@@ -61,21 +63,10 @@ for k in range(int(radius/pas)):
 
 
 
-
-#fit de la courbe
-def func(x, a, b, c):
-    return a*b * (1+x**2) + c
-
-popt, pcov = curve_fit(func, R, densite[-2,:])
-xfine = np.linspace(0., radius, 100)
-
-
-
-
 #trace de la courbe
 plt.figure()
-plt.plot(xfine, func(xfine, popt[0], popt[1],popt[2]), 'r-')
 plt.errorbar(R, densite[-2,:] , xerr = pas, yerr = densite[-1,:], fmt = 'r.', label="Densite surfacique de bacteries")
 plt.xlabel("Rayon")
+plt.ylabel("Densite")
 plt.legend()
 plt.show()
