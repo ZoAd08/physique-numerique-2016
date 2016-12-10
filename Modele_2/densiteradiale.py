@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 '''/*********************************************************************************************
  *  @file    densiteradiale.py
- *  @author  Djinthana Dufour
+ *  @author  Djinthana Dufour & Benjamin Gallois
  *  @date    17/11/2016
  *  @version 1.0
  *  @resume  Permet de tracer la densite de bacteries en fonction du rayon
@@ -31,8 +31,6 @@ pas=radius / 50.
 
 #lecture des donnees
 data = np.loadtxt("marcheur.txt")
-x=np.zeros(marcheur)
-y=np.zeros(marcheur)
 points=np.zeros((marcheur,2))
 densite=np.zeros(((len(data[:,0])/marcheur)+2,int(radius/pas)))
 R = []
@@ -40,10 +38,11 @@ R = []
 
 
 #comptage du nombre de bacteries par couronne
-for j in range(1,(len(data[:,0])/marcheur)-1):
-
-    x=data[marcheur*j:(marcheur-1)*(j+1),0].transpose()
-    y=data[marcheur*j:(marcheur-1)*(j+1),1].transpose()
+for j in range(1,(len(data[:,0])/marcheur)):
+    x=np.zeros(marcheur)
+    y=np.zeros(marcheur)
+    x=data[marcheur*j:(marcheur)*(j+1),0].transpose()
+    y=data[marcheur*j:(marcheur)*(j+1),1].transpose()
     points = zip(x,y)
     T=KDTree(points)
     m = 0
@@ -67,9 +66,14 @@ def fitfunc(x,a,b,c,d,e):
 	return (a*x**2+b*x+c)*np.exp(-d*x)+e
 
 
+for m in range(len(densite[-2,:])):
+    if densite[-2,m] == 0:
+        n = m
+    if densite[-3,m] ==0:
+        densite[-3,m] = 0.01
 
-
-popt, pcov = curve_fit(fitfunc, R, densite[-2,:],p0=[-2.3e-9,9.31e-7,-0.0008,0.0013,0.0007])
+print n
+popt, pcov = curve_fit(fitfunc, R[n+1:-1], densite[-2,n+1:-1],p0=[-2.0e-9,9.0e-7,-0.0008,0.0013,0.0007],sigma= densite[-3,n+1:-1])
 
 
 x=np.linspace(0,radius,100)
@@ -83,12 +87,12 @@ print root
 
 
 
-
+'''
 out = "\n"+ str(root[0]) + " " + str(0) + " " + str(root[1])
 fichier = open("output.txt", "a")
 fichier.write(out)
 fichier.close()
-
+'''
 
 #trace de la courbe
 plt.figure()

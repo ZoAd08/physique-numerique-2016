@@ -64,7 +64,7 @@ Utilisation de la simulation.
 
 * Tracer la densité de bactéries en fonction du rayon.
 
-	** Régler la variable "type" sur 1 et le nombre de réalisation à prendre en compte pour faire la moyenne dans le fichier modele2.cpp puis exécuter le fichier, visualiser les données avec le fichier densiteradiale.cpp
+	** Régler la variable "type" sur 1 et le nombre de réalisation à prendre en compte pour faire la moyenne dans le fichier modele2.cpp puis exécuter le fichier, visualiser les données avec le fichier densiteradiale.py
 
 * Pour chaque simulation, le programme renvoie un fichier de configuration.
 
@@ -74,3 +74,5 @@ Utilisation de la simulation.
 					# Temps 1												Temps 2 (où la bactérie sens le gradient)#
 					# Pas moyen de la bactérie 1	 						0.00000000000000000000 				     #
 					##################################################################################################
+
+* Le fichier densiteradiale.py permet d'exporter le rayon interne externe et moyen de l'anneau dans un fichier output.txt.

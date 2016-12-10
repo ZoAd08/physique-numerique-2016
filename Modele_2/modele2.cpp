@@ -265,7 +265,7 @@ int main()
 	}
 	double k = 0;
 	double z = 0;
-	while(k <= 3000)
+	while(k <= 7000)
 	{
 		int min = minimum(tps , nombre_de_bacteries);
 		long double value = tps[min];
@@ -287,8 +287,8 @@ int main()
 
 		if (k > 1500)
 		{
-			int al = rand()%500;
-			while(z < 10 and al == 1) //nombre de realisation pour faire une moyenne
+			int al = rand()%200;
+			while(z < 500 and al == 1) //nombre de realisation pour faire une moyenne
 
 			{
 				for(int i = 0; i < nombre_de_bacteries; ++i)
