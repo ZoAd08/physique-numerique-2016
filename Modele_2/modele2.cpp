@@ -61,7 +61,7 @@ class bacteria
 	double pas_normal = 20; //microns
 	double sens1 = 3; //3secondes
 	double sens2 = 0; //secondes
-	double radius = 2500;
+	double radius = 1500;
 	double gain = 20;
 	double pas_moyen = 0;
 	
@@ -265,7 +265,7 @@ int main()
 	}
 	double k = 0;
 	double z = 0;
-	while(k <= 2000)
+	while(k <= 3000)
 	{
 		int min = minimum(tps , nombre_de_bacteries);
 		long double value = tps[min];
@@ -284,17 +284,12 @@ int main()
 		}
 
 		k += value;
-<<<<<<< HEAD
+
 		if (k > 1500)
 		{
-			int al = rand()%100;
-			while(z < 100 and al ==1) //nombre de realisation pour faire une moyenne
-=======
-		if (k > 1200)
-		{
-			int al = rand()%100;
-			while(z < 50 and al ==1) //nombre de realisation pour faire une moyenne
->>>>>>> be65c134a00687bfdb32c6351561f3cb07ba6ece
+			int al = rand()%500;
+			while(z < 10 and al == 1) //nombre de realisation pour faire une moyenne
+
 			{
 				for(int i = 0; i < nombre_de_bacteries; ++i)
 					{

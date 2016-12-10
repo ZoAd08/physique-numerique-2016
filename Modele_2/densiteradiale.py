@@ -14,7 +14,7 @@ import matplotlib.pyplot as plt
 from numpy import transpose
 from scipy.spatial import KDTree
 from scipy.optimize import curve_fit
-import scipy.special as sp
+from scipy.optimize import fsolve
 
 
 
@@ -67,26 +67,33 @@ def fitfunc(x,a,b,c,d,e):
 	return (a*x**2+b*x+c)*np.exp(-d*x)+e
 
 
+
+
 popt, pcov = curve_fit(fitfunc, R, densite[-2,:],p0=[-2.3e-9,9.31e-7,-0.0008,0.0013,0.0007])
 
 
 x=np.linspace(0,radius,100)
 
+def solve(x):
+	return fitfunc(x,popt[0],popt[1],popt[2],popt[3],popt[4]) - fitfunc(1./popt[3],popt[0],popt[1],popt[2],popt[3],popt[4])
+
+root = fsolve(solve,[200,700])
+print root
 
 
 
 
 
+out = "\n"+ str(root[0]) + " " + str(0) + " " + str(root[1])
+fichier = open("output.txt", "a")
+fichier.write(out)
+fichier.close()
 
 
-'''
-name = str(temps) + '_' + str(marcheur)
-np.savetxt('name.txt', zip(R , densite[-2,:] , densite[-1,:]))
-'''
 #trace de la courbe
 plt.figure()
 plt.plot(x,fitfunc(x,popt[0],popt[1],popt[2],popt[3],popt[4]))
-plt.plot(x,np.ones(len(x))*popt[3])
+plt.plot(x,np.ones(len(x))*fitfunc(1./popt[3],popt[0],popt[1],popt[2],popt[3],popt[4]))
 plt.errorbar(R, densite[-2,:] , xerr = pas, yerr = densite[-1,:], fmt = 'r.', label="Densite surfacique de bacteries")
 plt.xlabel("Rayon")
 plt.ylabel("Densite")
