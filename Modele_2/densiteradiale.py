@@ -61,7 +61,7 @@ for k in range(int(radius/pas)):
     densite[-2,k]=np.mean(densite[0:-3,k])
     densite[-1,k]=np.std(densite[0:-3,k])
 
-<<<<<<< HEAD
+
 
 def fitfunc(x,a,b,c,d,e):
 	return (a*x**2+b*x+c)*np.exp(-d*x)+e
@@ -78,7 +78,7 @@ x=np.linspace(0,radius,100)
 
 
 
-#trace de la courbe
+
 '''
 name = str(temps) + '_' + str(marcheur)
 np.savetxt('name.txt', zip(R , densite[-2,:] , densite[-1,:]))
@@ -86,7 +86,7 @@ np.savetxt('name.txt', zip(R , densite[-2,:] , densite[-1,:]))
 #trace de la courbe
 plt.figure()
 plt.plot(x,fitfunc(x,popt[0],popt[1],popt[2],popt[3],popt[4]))
-plt.plot(x,np.ones(len(x)*popt[3])
+plt.plot(x,np.ones(len(x))*popt[3])
 plt.errorbar(R, densite[-2,:] , xerr = pas, yerr = densite[-1,:], fmt = 'r.', label="Densite surfacique de bacteries")
 plt.xlabel("Rayon")
 plt.ylabel("Densite")
