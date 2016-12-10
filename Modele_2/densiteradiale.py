@@ -23,7 +23,7 @@ temps = config[0,1]
 radius = config[1,0]
 gain = "Gain : " + str(config[1,1]) + "\n"
 sens = "Comparaison entre " + str(config[2,0]) + " seconde et " + str(config[2,1]) + " seconde" + "\n"
-pas=radius / 40.
+pas=radius / 50.
 
 
 
@@ -60,21 +60,25 @@ for k in range(int(radius/pas)):
     densite[-1,k]=np.std(densite[0:-3,k])
 
 
+def fitfunc(x,a,b,c,d,e):
+	return (a*x**2+b*x+c)*np.exp(-d*x)+e
 
 
-#fit de la courbe
-def func(x, a, b, c):
-    return a*b * (1+x**2) + c
+popt, pcov = curve_fit(fitfunc, R, densite[-2,:],p0=[-2.3e-9,9.31e-7,-0.0008,0.0013,0.0007])
 
-popt, pcov = curve_fit(func, R, densite[-2,:])
-xfine = np.linspace(0., radius, 100)
+
+x=np.linspace(0,radius,100)
+
+
+
 
 
 
 
 #trace de la courbe
 plt.figure()
-plt.plot(xfine, func(xfine, popt[0], popt[1],popt[2]), 'r-')
+plt.plot(x,fitfunc(x,popt[0],popt[1],popt[2],popt[3],popt[4]))
+plt.plot(x,popt[3])
 plt.errorbar(R, densite[-2,:] , xerr = pas, yerr = densite[-1,:], fmt = 'r.', label="Densite surfacique de bacteries")
 plt.xlabel("Rayon")
 plt.legend()
