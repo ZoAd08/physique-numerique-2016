@@ -284,10 +284,17 @@ int main()
 		}
 
 		k += value;
+<<<<<<< HEAD
 		if (k > 1500)
 		{
 			int al = rand()%100;
 			while(z < 100 and al ==1) //nombre de realisation pour faire une moyenne
+=======
+		if (k > 1200)
+		{
+			int al = rand()%100;
+			while(z < 50 and al ==1) //nombre de realisation pour faire une moyenne
+>>>>>>> be65c134a00687bfdb32c6351561f3cb07ba6ece
 			{
 				for(int i = 0; i < nombre_de_bacteries; ++i)
 					{
