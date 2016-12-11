@@ -85,9 +85,9 @@ maximum = newton(derifitfunc, 360, args=(popt[0],popt[1],popt[2],popt[3],popt[4]
 print maximum
 
 def solve(x):
-	return fitfunc(x,popt[0],popt[1],popt[2],popt[3],popt[4]) - maximum
+	return fitfunc(x,popt[0],popt[1],popt[2],popt[3],popt[4]) - 0.5*fitfunc(maximum,popt[0],popt[1],popt[2],popt[3],popt[4])
 
-root = fsolve(solve,[200,700])
+root = fsolve(solve,[172,900])
 print root
 
 
