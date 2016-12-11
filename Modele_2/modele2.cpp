@@ -245,14 +245,13 @@ avant le prochain tumble de la bactérie.*/
 };
 
 
-const int nombre_de_bacteries = 1000;
+const int nombre_de_bacteries = 1;
 
 int main()
 {
 
 
-	double type = 1; // 0 = exporte toutes les positions, =1 exporte la position initiale et finale
-	double cont = 0;
+	double type = 0; // 0 = exporte toutes les positions, =1 exporte la position initiale et finale
 
 	srand (time(NULL));
 	freopen( "marcheur.txt", "w", stdout );
@@ -265,7 +264,7 @@ int main()
 	}
 	double k = 0;
 	double z = 0;
-	while(k <= 7000)
+	while(k <= 2000)
 	{
 		int min = minimum(tps , nombre_de_bacteries);
 		long double value = tps[min];
@@ -274,18 +273,18 @@ int main()
 			tps[i] -= value;
 		}
 		tps[min] += bac[min].evolution();
+		k += value;
 
 		if (type == 0)
 		{
 			for (int i = 0; i < nombre_de_bacteries; ++i) //permet d'enregistrer toutes les trajectoires (lent)
 				{
-					bac[i].enregistrement();
+					bac[i].position_finale(k);
 				}
 		}
 
-		k += value;
 
-		if (k > 1500)
+		if (k > 1500 and type == 1)
 		{
 			int al = rand()%3000000;
 			while(z < 1000 and al == 1) //nombre de realisation pour faire une moyenne
@@ -296,7 +295,6 @@ int main()
 						bac[i].position_finale(k);
 					}
 				z += 1;
-				cont = k;
 			}
 		}
 	
@@ -314,7 +312,7 @@ int main()
 	}
 
 	freopen( "config.txt", "w", stdout );
-	printf ( "%.3d %.20f \n", nombre_de_bacteries , cont);
+	printf ( "%.3d %.20f \n", nombre_de_bacteries , k);
 	bac[0].information();
   return 0;
 }

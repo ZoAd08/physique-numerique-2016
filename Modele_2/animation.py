@@ -14,12 +14,15 @@ import time
 import numpy as np
 
 
-#extraction des donnees
-
+#lecture du fichier de config qui defini automatiquement les parametres utilises pour produire les donnees
 config = np.loadtxt("config.txt")
-marcheur = int(config[0])
-temps = config[1]
-radius = 1000.
+marcheur = int(config[0,0])
+temps = config[0,1]
+radius = config[1,0]
+gain = "Gain : " + str(config[1,1]) + "\n"
+sens = "Comparaison entre " + str(config[2,0]) + " seconde et " + str(config[2,1]) + " seconde" + "\n"
+
+
 data = np.loadtxt("marcheur.txt")
 x=np.zeros(((int(len(data[:,0])/marcheur)),marcheur))
 y=np.zeros(((int(len(data[:,0])/marcheur)),marcheur))
@@ -50,9 +53,9 @@ line, = ax.plot([], [], 'ro', ms=5)
 #animation du graphique
 
 def animate(i):
-    pas = str(i)
+    pas = str((i*temps)/(len(x[:,0])))
     line.set_data(x[i,:], y[i,:])
-    time_text.set_text('Pas : ' + pas)
+    time_text.set_text('Temps : ' + pas)
     return line, time_text,
 
 
@@ -62,9 +65,10 @@ def animate(i):
 #trace de l'animation
 
 
-ani = animation.FuncAnimation(fig, animate, frames=len(x[:,0]), interval=10, blit=False, repeat=True)
+ani = animation.FuncAnimation(fig, animate, frames=len(x[:,0]), interval=1e-100, blit=True, repeat=True)
 
 legend_nbmarcheurs = "Nombre de bacteries : " + str(marcheur) + "\n"
 legend_nbpas = "Temps : " + str(temps)
 plt.title(legend_nbmarcheurs + legend_nbpas)
-plt.show()
+ani.save('clock.mp4', fps=2000, dpi=100)
+#plt.show()

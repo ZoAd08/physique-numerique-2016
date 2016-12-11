@@ -56,7 +56,7 @@ Utilisation de la simulation.
 
 * Tracer de la trajectoire des bactéries.
 
-	** Régler la variable "type" sur 0 dans le fichier modele2.cpp puis exécuter le fichier, visualiser les données avec le fichier analyse.py.
+	** Régler la variable "type" sur 0 dans le fichier modele2.cpp puis exécuter le fichier, visualiser les données avec le fichier analyse.py. 
 
 * Tracer la position finale et initiale des bactéries.
 
@@ -75,4 +75,8 @@ Utilisation de la simulation.
 					# Pas moyen de la bactérie 1	 						0.00000000000000000000 				     #
 					##################################################################################################
 
-* Le fichier densiteradiale.py permet d'exporter le rayon interne externe et moyen de l'anneau dans un fichier output.txt.
+* Le fichier densiteradiale.py permet d'exporter le rayon interne externe et moyen de l'anneau dans un fichier output.txt. Il est nécessaire de régler la position approximitative du maximum dans la fonction Newton et celles des largeurs à mis hauteurs pour que l'algorithme converge. 
+
+* Animation des bactéries.
+
+	** Régler la variable "type" sur 0 dans le fichier modele2.cpp puis exécuter le fichier, visualiser les données avec le fichier animation.py. Attention !!! La durée de la simulation entre 2 images n'est pas constante, ce qui entraîne des artéfacts de visualisation (bactéries qui accélerent etc...) 
