@@ -1,0 +1,34 @@
+set terminal wxt (0)
+set xrange [0:1500]
+set yrange [0:0.0003]
+set xlabel 'Rayon'
+set ylabel 'Densité surfacique'
+plot "1.0_0.0.txt" using 1:2:3 title "1-0" with yerrorbars lt 1, "1.0_0.0fit.txt" using 1:2 notitle with lines ls 1, "2.0_0.0.txt" using 1:2:3 title "2-0" with yerrorbars lt 2, "2.0_0.0fit.txt" using 1:2 notitle with lines ls 2, "3.0_0.0.txt" using 1:2:3 title "3-0" with yerrorbars lt 3, "3.0_0.0fit.txt" using 1:2 notitle with lines ls 3, "8.0_0.0.txt" using 1:2:3 title "8-0" with yerrorbars lt 6, "8.0_0.0fit.txt" using 1:2 notitle with lines ls 6,  "15.0_0.0.txt" using 1:2:3 title "15-0" with yerrorbars lt 4, "15.0_0.0fit.txt" using 1:2 notitle with lines ls 5,
+
+set terminal wxt (1)
+set xrange [0:1500]
+set yrange [0:0.0002]
+set xlabel 'Rayon'
+set ylabel 'Densité surfacique'
+plot "4.0_0.0.txt" using 1:2:3 title "4-0" with yerrorbars lt 1, "4.0_0.0fit.txt" using 1:2 notitle with lines ls 1, "4.0_1.0.txt" using 1:2:3 title "4-1" with yerrorbars lt 2, "4.0_1.0fit.txt" using 1:2 notitle with lines ls 2, "4.0_2.0.txt" using 1:2:3 title "4-2" with yerrorbars lt 3, "4.0_2.0fit.txt" using 1:2 notitle with lines ls 3, "4.0_3.0.txt" using 1:2:3 title "4-3" with yerrorbars lt 6, "4.0_3.0fit.txt" using 1:2 notitle with lines ls 6,
+
+
+set terminal wxt (2)
+set yrange [-10:250]
+set xlabel 'Différence de concentration'
+set ylabel 'Longueur pas'
+set xrange [ -20 : 10 ] noreverse nowriteback
+set arrow from 0,4 to 0,20 nohead lw 1
+plot sample [*:-10] 220 notitle, [-10:-0.00] 20*(1-x) notitle, [0.00:10] 4 notitle
+
+
+set terminal wxt (3)
+set xrange [0:1500]
+set yrange [0:0.0003]
+set xlabel 'Rayon'
+set ylabel 'Densité surfacique'
+plot "20.txt" using 1:2:3 with yerrorbars notitle ,  "0.5.txt" using 1:2:3 with yerrorbars notitle, "3.0_0.0.txt" using 1:2:3 with yerrorbars notitle, "1.txt" using 1:2:3 with yerrorbars notitle, "0.1.txt" using 1:2:3 with yerrorbars notitle, "20.txt" using 1:2 title "20" with lines , "3.0_0.0.txt" using 1:2 title "0.02" with lines, "1.txt" using 1:2 title "1" with lines, "0.5.txt" using 1:2 title "0.5" with lines , "01.txt" using 1:2 title "0.1" with lines, "0.08.txt" using 1:2:3 with yerrorbars notitle , "0.08.txt" using 1:2 title "0.08" with lines 
+
+
+
+pause -1 "Hit any key to continue"

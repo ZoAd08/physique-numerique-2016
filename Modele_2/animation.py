@@ -3,7 +3,7 @@
  *  @author  Benjamin GALLOIS
  *  @date    18/11/2016
  *  @version 1.0
- *  @resume
+ *  @resume Permet de tracer le mouvement animé des bactéries.
 *******************************************************************************/'''
 
 
@@ -70,5 +70,5 @@ ani = animation.FuncAnimation(fig, animate, frames=len(x[:,0]), interval=1e-100,
 legend_nbmarcheurs = "Nombre de bacteries : " + str(marcheur) + "\n"
 legend_nbpas = "Temps : " + str(temps)
 plt.title(legend_nbmarcheurs + legend_nbpas)
-ani.save('clock.mp4', fps=2000, dpi=100)
+ani.save('clock.mp4', fps=200, dpi=100)
 #plt.show()

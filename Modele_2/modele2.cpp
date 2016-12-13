@@ -4,7 +4,7 @@
  *  @date    18/11/2016
  *  @version 1.0
  *  @resume Déplacement de bactéries dans un gradient de nutriment. Les bactéries
- 	    ne sont sensibles qu'à la différence de concentration prise entre deux instants.
+ 	    	ne sont sensibles qu'à la différence de concentration prise entre deux instants.
 ************************************************************************************/
 
 
@@ -165,7 +165,7 @@ avant le prochain tumble de la bactérie.*/
 			}
 			else
 			{
-				pas = dist_pas*0.2;
+				pas = dist_pas*0.08;
 			}
 
 
@@ -245,13 +245,13 @@ avant le prochain tumble de la bactérie.*/
 };
 
 
-const int nombre_de_bacteries = 1;
+const int nombre_de_bacteries = 500;
 
 int main()
 {
 
 
-	double type = 0; // 0 = exporte toutes les positions, =1 exporte la position initiale et finale
+	double type = 3; // 0 = exporte toutes les positions, =1 exporte la position initiale et finale, 3 des instants aléatoires
 
 	srand (time(NULL));
 	freopen( "marcheur.txt", "w", stdout );
@@ -264,7 +264,7 @@ int main()
 	}
 	double k = 0;
 	double z = 0;
-	while(k <= 2000)
+	while(k <= 5000)
 	{
 		int min = minimum(tps , nombre_de_bacteries);
 		long double value = tps[min];
@@ -284,9 +284,9 @@ int main()
 		}
 
 
-		if (k > 1500 and type == 1)
+		if (k > 1500 && type == 3)
 		{
-			int al = rand()%3000000;
+			int al = rand()%3000000; //a régler suivant la taille des pas
 			while(z < 1000 and al == 1) //nombre de realisation pour faire une moyenne
 
 			{
@@ -303,7 +303,7 @@ int main()
 		value = 0;
 	}
 
-	if (type == 1)
+	if (type == 1 || type == 3)
 	{
 		for(int i = 0; i < nombre_de_bacteries; ++i)
 			{
@@ -312,7 +312,7 @@ int main()
 	}
 
 	freopen( "config.txt", "w", stdout );
-	printf ( "%.3d %.20f \n", nombre_de_bacteries , k);
+	printf ( "%.3d %.20f \n", nombre_de_bacteries , z);
 	bac[0].information();
   return 0;
 }

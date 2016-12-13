@@ -75,7 +75,8 @@ Utilisation de la simulation.
 					# Pas moyen de la bactérie 1	 						0.00000000000000000000 				     #
 					##################################################################################################
 
-* Le fichier densiteradiale.py permet d'exporter le rayon interne externe et moyen de l'anneau dans un fichier output.txt. Il est nécessaire de régler la position approximitative du maximum dans la fonction Newton et celles des largeurs à mis hauteurs pour que l'algorithme converge. 
+
+* Le fichier densiteradiale.py permet d'exporter le rayon interne externe et moyen de l'anneau dans un fichier output.txt. Il est nécessaire de régler la position approximitative du maximum dans la fonction Newton et celles des largeurs à mis hauteurs pour que l'algorithme converge, ainsi que le tirage aléatoire des moyennes.
 
 * Animation des bactéries.
 

@@ -4,7 +4,7 @@
  *  @author  Djinthana Dufour & Benjamin Gallois
  *  @date    17/11/2016
  *  @version 1.0
- *  @resume  Permet de tracer la densite de bacteries en fonction du rayon
+ *  @resume  Permet de tracer la densite de bactéries en fonction du rayon. D'ajuster la courbe et d'en trouver le maximum pour en
 *********************************************************************************************/'''
 
 
@@ -63,11 +63,11 @@ for k in range(int(radius/pas)):
 
 
 
-def fitfunc(x,a,b,c,d,e):
-	return (a*x**2+b*x+c)*np.exp(-d*x)+e
+def fitfunc(x,a,d):
+	return (a*x**2)*np.exp(-d*x)
 
-def derifitfunc(x,a,b,c,d,e):
-    return (a*x**2+b*x+c)*np.exp(-d*x)*(-d) + (2*a*x+b)*np.exp(-d*x)
+def derifitfunc(x,a,d):
+    return (a*x**2)*np.exp(-d*x)*(-d) + (2*a*x)*np.exp(-d*x)
 
 n = 0
 for m in range(len(densite[-2,:])):
@@ -76,36 +76,41 @@ for m in range(len(densite[-2,:])):
     if densite[-3,m] ==0:
         densite[-3,m] = 0.01
 
-popt, pcov = curve_fit(fitfunc, R[n+1:-1], densite[-2,n+1:-1],p0=[-2.0e-9,9.0e-7,-0.0008,0.0013,0.0007],sigma= densite[-3,n+1:-1])
+popt, pcov = curve_fit(fitfunc, R[n+1:-1], densite[-2,n+1:-1],p0=[-2.0e-9,0.0013],sigma= densite[-3,n+1:-1])
 
 
 x=np.linspace(0,radius,100)
 
-maximum = newton(derifitfunc, 360, args=(popt[0],popt[1],popt[2],popt[3],popt[4]), tol=10**(-10),maxiter=1000)
+'''maximum = newton(derifitfunc, 360, args=(popt[0],popt[1]),maxiter=1000)
 print maximum
 
 def solve(x):
-	return fitfunc(x,popt[0],popt[1],popt[2],popt[3],popt[4]) - 0.5*fitfunc(maximum,popt[0],popt[1],popt[2],popt[3],popt[4])
+	return fitfunc(x,popt[0],popt[1]) - 0.5*fitfunc(maximum,popt[0],popt[1])
 
 root = fsolve(solve,[172,900])
 print root
-
+'''
 
 
 
 '''
-out = "\n"+ str(root[0]) + " " + str(0) + " " + str(root[1])
+out = "\n"+ str(root[0]) + " " + str(maximum) + " " + str(root[1])
 fichier = open("output.txt", "a")
 fichier.write(out)
-fichier.close()
-'''
+fichier.close()'''
+
+#name = str(config[2,0]) + "_" + str(config[2,1]) + ".txt"
+np.savetxt('0.08.txt', zip(R,densite[-2,:],densite[-1,:]))
+#name1 = str(config[2,0]) + "_" + str(config[2,1]) + "fit.txt"
+#np.savetxt(name1, zip(x,fitfunc(x,popt[0],popt[1])))
+
 
 #trace de la courbe
-plt.figure()
-plt.plot(x,fitfunc(x,popt[0],popt[1],popt[2],popt[3],popt[4]))
-plt.plot(x,np.ones(len(x))*0.5*(fitfunc(maximum,popt[0],popt[1],popt[2],popt[3],popt[4])))
+'''plt.figure()
+plt.plot(x,fitfunc(x,popt[0],popt[1]))
+plt.plot(x,np.ones(len(x))*0.5*(fitfunc(maximum,popt[0],popt[1])))
 plt.errorbar(R, densite[-2,:], yerr = densite[-1,:], fmt = 'r.', label="Densite surfacique de bacteries")
 plt.xlabel("Rayon")
 plt.ylabel("Densite")
 plt.legend()
-plt.show()
+plt.show()'''
