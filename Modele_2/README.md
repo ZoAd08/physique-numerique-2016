@@ -1,3 +1,9 @@
+######################################################
+#    physique-numerique-2016                         #
+#    @Benjamin GALLOIS & Djinthana DUFOUR.           #
+######################################################
+
+
 Modèle de simulation de nage de bactéries à 2 dimensions dans une boîte circulaire.
 
 

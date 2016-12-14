@@ -1,7 +1,7 @@
 # -*- coding: cp1252 -*-
 '''/*********************************************************************************************
  *  @file    analysetranspose.py
- *  @author  Benjamin GALLOIS & Djinthana Dufour
+ *  @author  Djinthana Dufour
  *  @date    15/11/2016
  *  @version 1.0
  *  @resume  Permet de tracer la position initiale et finale de la marche aléatoire N particules.

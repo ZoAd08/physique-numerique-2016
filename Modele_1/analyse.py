@@ -1,7 +1,7 @@
 # -*- coding: cp1252 -*-
 '''/*******************************************************************************
  *  @file    analyse.cpp
- *  @author  Benjamin GALLOIS
+ *  @author  Benjamin GALLOIS & Djinthana DUFOUR
  *  @date    18/11/2016
  *  @version 1.2
  *  @resume  Permet de tracer la marche aleatoire anime de N particules.
