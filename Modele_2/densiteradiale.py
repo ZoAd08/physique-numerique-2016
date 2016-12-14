@@ -81,7 +81,7 @@ popt, pcov = curve_fit(fitfunc, R[n+1:-1], densite[-2,n+1:-1],p0=[-2.0e-9,0.0013
 
 x=np.linspace(0,radius,100)
 
-'''maximum = newton(derifitfunc, 360, args=(popt[0],popt[1]),maxiter=1000)
+maximum = newton(derifitfunc, 360, args=(popt[0],popt[1]),maxiter=1000)
 print maximum
 
 def solve(x):
@@ -89,24 +89,24 @@ def solve(x):
 
 root = fsolve(solve,[172,900])
 print root
-'''
 
 
 
-'''
+
+
 out = "\n"+ str(root[0]) + " " + str(maximum) + " " + str(root[1])
 fichier = open("output.txt", "a")
 fichier.write(out)
-fichier.close()'''
+fichier.close()
 
 #name = str(config[2,0]) + "_" + str(config[2,1]) + ".txt"
-np.savetxt('0.08.txt', zip(R,densite[-2,:],densite[-1,:]))
+#np.savetxt('0.08.txt', zip(R,densite[-2,:],densite[-1,:]))
 #name1 = str(config[2,0]) + "_" + str(config[2,1]) + "fit.txt"
 #np.savetxt(name1, zip(x,fitfunc(x,popt[0],popt[1])))
 
-
+'''
 #trace de la courbe
-'''plt.figure()
+plt.figure()
 plt.plot(x,fitfunc(x,popt[0],popt[1]))
 plt.plot(x,np.ones(len(x))*0.5*(fitfunc(maximum,popt[0],popt[1])))
 plt.errorbar(R, densite[-2,:], yerr = densite[-1,:], fmt = 'r.', label="Densite surfacique de bacteries")

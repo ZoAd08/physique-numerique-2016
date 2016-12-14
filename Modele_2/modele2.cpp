@@ -59,7 +59,7 @@ class bacteria
 	int iterateur;
 	double vitesse = 20; //micronse/seconde
 	double pas_normal = 20; //microns
-	double sens1 = 3; //3secondes
+	double sens1 = 15; //3secondes
 	double sens2 = 0; //secondes
 	double radius = 1500;
 	double gain = 20;
@@ -165,7 +165,7 @@ avant le prochain tumble de la bactérie.*/
 			}
 			else
 			{
-				pas = dist_pas*0.08;
+				pas = dist_pas*0.2;
 			}
 
 
@@ -312,7 +312,7 @@ int main()
 	}
 
 	freopen( "config.txt", "w", stdout );
-	printf ( "%.3d %.20f \n", nombre_de_bacteries , z);
+	printf ( "%.3d %.20f \n", nombre_de_bacteries , k);
 	bac[0].information();
   return 0;
 }

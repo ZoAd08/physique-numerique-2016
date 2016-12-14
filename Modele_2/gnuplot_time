@@ -5,6 +5,8 @@ set xlabel 'Rayon'
 set ylabel 'Densité surfacique'
 plot "1.0_0.0.txt" using 1:2:3 title "1-0" with yerrorbars lt 1, "1.0_0.0fit.txt" using 1:2 notitle with lines ls 1, "2.0_0.0.txt" using 1:2:3 title "2-0" with yerrorbars lt 2, "2.0_0.0fit.txt" using 1:2 notitle with lines ls 2, "3.0_0.0.txt" using 1:2:3 title "3-0" with yerrorbars lt 3, "3.0_0.0fit.txt" using 1:2 notitle with lines ls 3, "8.0_0.0.txt" using 1:2:3 title "8-0" with yerrorbars lt 6, "8.0_0.0fit.txt" using 1:2 notitle with lines ls 6,  "15.0_0.0.txt" using 1:2:3 title "15-0" with yerrorbars lt 4, "15.0_0.0fit.txt" using 1:2 notitle with lines ls 5,
 
+
+
 set terminal wxt (1)
 set xrange [0:1500]
 set yrange [0:0.0002]
@@ -27,7 +29,9 @@ set xrange [0:1500]
 set yrange [0:0.0003]
 set xlabel 'Rayon'
 set ylabel 'Densité surfacique'
-plot "20.txt" using 1:2:3 with yerrorbars notitle ,  "0.5.txt" using 1:2:3 with yerrorbars notitle, "3.0_0.0.txt" using 1:2:3 with yerrorbars notitle, "1.txt" using 1:2:3 with yerrorbars notitle, "0.1.txt" using 1:2:3 with yerrorbars notitle, "20.txt" using 1:2 title "20" with lines , "3.0_0.0.txt" using 1:2 title "0.02" with lines, "1.txt" using 1:2 title "1" with lines, "0.5.txt" using 1:2 title "0.5" with lines , "01.txt" using 1:2 title "0.1" with lines, "0.08.txt" using 1:2:3 with yerrorbars notitle , "0.08.txt" using 1:2 title "0.08" with lines 
+plot "20.txt" using 1:2:3 with yerrorbars notitle ,  "0.5.txt" using 1:2:3 with yerrorbars notitle, "3.0_0.0.txt" using 1:2:3 with yerrorbars notitle, "1.txt" using 1:2:3 with yerrorbars notitle,  "20.txt" using 1:2 title "20" with lines , "3.0_0.0.txt" using 1:2 title "0.02" with lines, "1.txt" using 1:2 title "1" with lines, "0.5.txt" using 1:2 title "0.5" with lines, "0.08.txt" using 1:2:3 with yerrorbars notitle , "0.08.txt" using 1:2 title "0.08" with lines 
+
+
 
 
 
