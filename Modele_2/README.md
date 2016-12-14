@@ -3,8 +3,8 @@
 #    @Benjamin GALLOIS & Djinthana DUFOUR.           #
 ######################################################
 
+Étude de la nage de bactéries dans un gradient d'attractant, mise en évidence de l'effet volcan.
 
-Modèle de simulation de nage de bactéries à 2 dimensions dans une boîte circulaire.
 
 
 
@@ -101,7 +101,7 @@ Utilisation de la simulation.
 
 * Analyse/visualisation des données (python et Gnuplot) :
 	
-	- animation.py (Benjamin Gallois) : créer une animation dela simulation.
+	- animation.py (Benjamin Gallois) : créer une animation de la simulation.
 	- analyse.py (Benjamin Gallois & Djinthana Dufour) : permet de tracer l'ensemble des trajectoires des bactéries.
 	- analysetranspose.py (Djinthana Dufour): permet de tracer la position initiale et la position finale des bactéries.
 	- densiteradiale.py (Benjamin Gallois & Djinthana Dufour) : permet de tracer la densité de bactérie en fonction du rayon de la boîte, le comptage s'effectuant en couronnes d'épaisseurs constantes, d'ajuster la courbe obtenue, d'en trouver le maximum ainsi que l'abscisse des largeurs à mis hauteur, permet ensuite d'exporter les données traitées dans des fichiers .txt pour en faire une statistique.
